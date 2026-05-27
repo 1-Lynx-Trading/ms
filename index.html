@@ -1,480 +1,744 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Ask Sean — Math & Science Problems</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ask Sean — Math & Science</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css"/>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0f14;--surface:#13161e;--surface2:#1c2030;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --gold:#e8b84b;--gold-dim:rgba(232,184,75,0.15);--gold-border:rgba(232,184,75,0.3);
+  --teal:#3fd8c0;--teal-dim:rgba(63,216,192,0.12);--teal-border:rgba(63,216,192,0.3);
+  --text:#eceae2;--muted:#7a7d8a;--danger:#e05858;--success:#4ade80;
+  --radius:12px;--radius-lg:20px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+.glow{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;opacity:.18}
+.glow-a{width:500px;height:500px;background:#e8b84b;top:-180px;right:-100px}
+.glow-b{width:400px;height:400px;background:#3fd8c0;bottom:-150px;left:-80px}
 
-  :root {
-    --bg:        #0d0f14;
-    --surface:   #13161e;
-    --surface2:  #1c2030;
-    --border:    rgba(255,255,255,0.07);
-    --border2:   rgba(255,255,255,0.13);
-    --gold:      #e8b84b;
-    --gold-dim:  rgba(232,184,75,0.15);
-    --teal:      #3fd8c0;
-    --teal-dim:  rgba(63,216,192,0.12);
-    --text:      #eceae2;
-    --muted:     #7a7d8a;
-    --danger:    #e05858;
-    --radius:    12px;
-    --radius-lg: 20px;
-  }
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,15,20,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:900px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{font-family:'Playfair Display',serif;font-size:20px;font-weight:600}
+.nav-brand span{color:var(--gold);font-style:italic}
+.nav-links{display:flex;gap:10px}
+.nav-btn{background:transparent;border:1px solid var(--border2);color:var(--muted);border-radius:100px;padding:8px 18px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s}
+.nav-btn:hover{border-color:var(--gold);color:var(--gold)}
+.nav-btn.active{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold)}
+.nav-test-btn{background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold)}
+.nav-test-btn:hover{background:rgba(232,184,75,0.25)}
 
-  html { scroll-behavior: smooth; }
+/* ── PAGES ── */
+.page{position:relative;z-index:1;padding-top:80px;min-height:100vh;display:none}
+.page.visible{display:block}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px}
+.wrap-lg{max-width:900px;margin:0 auto;padding:0 24px}
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+/* ── HOME PAGE ── */
+header{padding:56px 0 40px;text-align:center;animation:fadeUp .6s ease both}
+.badge{display:inline-flex;align-items:center;gap:8px;background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:100px;padding:6px 18px;font-size:12px;font-weight:500;letter-spacing:.06em;color:var(--gold);text-transform:uppercase;margin-bottom:24px}
+.badge::before{content:'✦';font-size:10px}
+h1{font-family:'Playfair Display',serif;font-size:clamp(36px,7vw,60px);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:16px}
+h1 em{font-style:italic;color:var(--gold)}
+.subtitle{font-size:16px;font-weight:300;color:var(--muted);line-height:1.7;max-width:480px;margin:0 auto 36px}
+.subjects{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:40px;animation:fadeUp .6s .1s ease both}
+.pill{display:inline-flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--border2);border-radius:100px;padding:8px 18px;font-size:13px;color:var(--muted)}
+.pill .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.pill:nth-child(1) .dot{background:#e8b84b}.pill:nth-child(2) .dot{background:#3fd8c0}
+.pill:nth-child(3) .dot{background:#8b7cf8}.pill:nth-child(4) .dot{background:#e05858}
+.pill:nth-child(5) .dot{background:#54a7f5}.pill:nth-child(6) .dot{background:#7bd97b}
 
-  /* ─── animated grid background ─── */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-    background-size: 48px 48px;
-    pointer-events: none;
-    z-index: 0;
-  }
+/* ── FORM CARD ── */
+.card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:44px;margin-bottom:60px;animation:fadeUp .6s .2s ease both}
+@media(max-width:560px){.card{padding:24px 18px}}
+.card-header{display:flex;align-items:center;gap:14px;margin-bottom:32px}
+.icon-wrap{width:44px;height:44px;border-radius:10px;background:var(--gold-dim);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.card-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:600}
+.card-sub{font-size:13px;color:var(--muted);margin-top:2px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:560px){.form-row{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+label{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+label span{color:var(--gold)}
+input,select,textarea{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;width:100%;appearance:none}
+input::placeholder,textarea::placeholder{color:#454858}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a7d8a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px;cursor:pointer}
+select option{background:#1c2030}
+textarea{resize:vertical;min-height:130px;line-height:1.6}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-dim)}
+input.error,select.error,textarea.error{border-color:var(--danger);box-shadow:0 0 0 3px rgba(224,88,88,.12)}
+.hint{font-size:12px;color:var(--muted);margin-top:-4px}
+.err-msg{font-size:12px;color:var(--danger);display:none}
+.err-msg.show{display:block}
+.difficulty-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:8px}
+input[type=range]{padding:0;height:6px;border-radius:100px;cursor:pointer;background:var(--surface2);border:none;box-shadow:none;accent-color:var(--gold)}
+input[type=range]:focus{box-shadow:none}
+.diff-value{font-family:'DM Mono',monospace;font-size:13px;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:6px;padding:2px 10px;display:inline-block}
+.divider{border:none;border-top:1px solid var(--border);margin:24px 0}
+.btn-submit{width:100%;padding:15px;background:var(--gold);color:#0d0f14;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:500;border:none;border-radius:var(--radius);cursor:pointer;transition:opacity .2s,transform .15s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:24px}
+.btn-submit:hover{opacity:.9}.btn-submit:active{transform:scale(.985)}
+.btn-submit svg{width:18px;height:18px}
+.btn-submit.sending{opacity:.7;pointer-events:none}
+.success-card{display:none;flex-direction:column;align-items:center;text-align:center;padding:60px 44px;gap:14px}
+.success-card.show{display:flex}
+.form-inner.hide{display:none}
+.success-icon{width:60px;height:60px;border-radius:50%;background:var(--teal-dim);border:1px solid var(--teal-border);display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:6px}
+.success-card h2{font-family:'Playfair Display',serif;font-size:24px}
+.success-card p{color:var(--muted);font-size:15px;line-height:1.6;max-width:320px}
+.btn-reset{margin-top:8px;background:transparent;border:1px solid var(--border2);color:var(--muted);border-radius:var(--radius);padding:10px 22px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:border-color .2s,color .2s}
+.btn-reset:hover{border-color:var(--gold);color:var(--gold)}
+footer{text-align:center;padding:20px 0 40px;font-size:13px;color:#3a3d4a}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--gold)}
 
-  /* ─── glow blobs ─── */
-  .glow {
-    position: fixed; border-radius: 50%; filter: blur(120px);
-    pointer-events: none; z-index: 0; opacity: 0.18;
-  }
-  .glow-a { width: 500px; height: 500px; background: #e8b84b; top: -180px; right: -100px; }
-  .glow-b { width: 400px; height: 400px; background: #3fd8c0; bottom: -150px; left: -80px; }
+/* ── HUB PAGE ── */
+.hub-header{text-align:center;padding:48px 0 40px}
+.hub-header h2{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,48px);font-weight:700;margin-bottom:12px}
+.hub-header h2 em{font-style:italic;color:var(--gold)}
+.hub-header p{color:var(--muted);font-size:16px;max-width:420px;margin:0 auto}
+.test-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:60px}
+@media(max-width:560px){.test-grid{grid-template-columns:1fr}}
+.test-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:36px 32px;display:flex;flex-direction:column;align-items:flex-start;gap:14px;cursor:pointer;transition:border-color .25s,transform .2s;position:relative;overflow:hidden}
+.test-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .25s}
+.test-card.math-card::before{background:radial-gradient(circle at 80% 20%,var(--gold-dim),transparent 60%)}
+.test-card.sci-card::before{background:radial-gradient(circle at 80% 20%,var(--teal-dim),transparent 60%)}
+.test-card:hover{transform:translateY(-3px)}
+.test-card.math-card:hover{border-color:var(--gold-border)}
+.test-card.math-card:hover::before{opacity:1}
+.test-card.sci-card:hover{border-color:var(--teal-border)}
+.test-card.sci-card:hover::before{opacity:1}
+.tc-icon{font-size:40px;line-height:1}
+.tc-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:600}
+.math-card .tc-title{color:var(--gold)}
+.sci-card .tc-title{color:var(--teal)}
+.tc-desc{font-size:14px;color:var(--muted);line-height:1.6;flex:1}
+.tc-pills{display:flex;flex-wrap:wrap;gap:6px}
+.tc-pill{font-size:11px;padding:3px 10px;border-radius:100px;background:var(--surface2);border:1px solid var(--border);color:var(--muted)}
+.btn-start{margin-top:8px;padding:10px 24px;border:none;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:opacity .2s,transform .15s}
+.btn-start:active{transform:scale(.97)}
+.math-card .btn-start{background:var(--gold);color:#0d0f14}
+.sci-card .btn-start{background:var(--teal);color:#0d0f14}
+.btn-start:hover{opacity:.9}
 
-  /* ─── layout ─── */
-  .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 0 24px; }
+/* ── TEST PAGE ── */
+.test-header{display:flex;align-items:center;justify-content:space-between;padding:28px 0 20px;gap:12px;flex-wrap:wrap}
+.test-meta{display:flex;flex-direction:column;gap:4px}
+.test-subject-tag{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:100px;display:inline-block}
+.math-tag{background:var(--gold-dim);color:var(--gold);border:1px solid var(--gold-border)}
+.sci-tag{background:var(--teal-dim);color:var(--teal);border:1px solid var(--teal-border)}
+.test-counter{font-size:14px;color:var(--muted);margin-top:4px}
+.test-counter strong{color:var(--text)}
+.progress-wrap{flex:1;max-width:220px}
+.progress-bar-bg{background:var(--surface2);border-radius:100px;height:6px;overflow:hidden}
+.progress-bar-fill{height:100%;border-radius:100px;transition:width .4s ease}
+.math-fill{background:var(--gold)}
+.sci-fill{background:var(--teal)}
+.progress-label{font-size:11px;color:var(--muted);text-align:right;margin-top:5px}
+.q-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:40px 44px;margin-bottom:24px;animation:fadeUp .3s ease both}
+@media(max-width:560px){.q-card{padding:24px 18px}}
+.q-topic{font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.q-text{font-size:17px;line-height:1.7;margin-bottom:28px}
+.choices{display:flex;flex-direction:column;gap:10px}
+.choice-btn{display:flex;align-items:flex-start;gap:14px;background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 18px;cursor:pointer;transition:border-color .2s,background .2s;text-align:left;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);width:100%}
+.choice-btn:hover{border-color:var(--border2)}
+.choice-btn.selected.math-sel{background:var(--gold-dim);border-color:var(--gold)}
+.choice-btn.selected.sci-sel{background:var(--teal-dim);border-color:var(--teal)}
+.choice-letter{font-family:'DM Mono',monospace;font-size:13px;font-weight:400;min-width:22px;padding-top:1px}
+.math-sel .choice-letter,.math-card .choice-letter{color:var(--gold)}
+.choice-btn.selected .choice-letter{font-weight:500}
+.choice-text{flex:1;line-height:1.5}
+.q-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:60px;flex-wrap:wrap}
+.btn-prev,.btn-next{padding:11px 24px;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;border:1px solid var(--border2);background:transparent;color:var(--muted)}
+.btn-prev:hover,.btn-next:hover{border-color:var(--text);color:var(--text)}
+.btn-prev:disabled{opacity:.3;cursor:not-allowed}
+.btn-submit-test{padding:12px 32px;border:none;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;cursor:pointer;transition:all .2s}
+.math-submit{background:var(--gold);color:#0d0f14}
+.sci-submit{background:var(--teal);color:#0d0f14}
+.btn-submit-test:hover{opacity:.9;transform:scale(1.02)}
+.q-dot-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px}
+.q-dot{width:22px;height:22px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--border);cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .2s;font-family:'DM Mono',monospace}
+.q-dot.answered.math-dot{background:var(--gold-dim);border-color:var(--gold);color:var(--gold)}
+.q-dot.answered.sci-dot{background:var(--teal-dim);border-color:var(--teal);color:var(--teal)}
+.q-dot.current-dot{transform:scale(1.2);border-width:2px}
 
-  /* ─── header ─── */
-  header {
-    padding: 72px 0 56px;
-    text-align: center;
-  }
+/* ── RESULTS PAGE ── */
+.results-header{text-align:center;padding:48px 0 32px}
+.score-circle{width:160px;height:160px;border-radius:50%;margin:0 auto 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
+.score-circle-math{background:var(--gold-dim);border:2px solid var(--gold-border)}
+.score-circle-sci{background:var(--teal-dim);border:2px solid var(--teal-border)}
+.score-num{font-family:'Playfair Display',serif;font-size:52px;font-weight:700;line-height:1}
+.score-num.math-num{color:var(--gold)}
+.score-num.sci-num{color:var(--teal)}
+.score-denom{font-size:16px;color:var(--muted);margin-top:4px}
+.band-badge{display:inline-block;padding:8px 24px;border-radius:100px;font-size:14px;font-weight:500;margin-bottom:8px}
+.band-below{background:rgba(224,88,88,.15);color:#f87171;border:1px solid rgba(224,88,88,.3)}
+.band-avg{background:rgba(232,184,75,.15);color:var(--gold);border:1px solid var(--gold-border)}
+.band-high{background:rgba(251,191,36,.15);color:#fbbf24;border:1px solid rgba(251,191,36,.3)}
+.band-above{background:rgba(74,222,128,.15);color:#4ade80;border:1px solid rgba(74,222,128,.3)}
+.band-superior{background:rgba(167,139,250,.15);color:#a78bfa;border:1px solid rgba(167,139,250,.3)}
+.results-desc{color:var(--muted);font-size:15px;max-width:380px;margin:0 auto 40px}
+.score-bar-wrap{max-width:500px;margin:0 auto 48px}
+.score-bar-bg{background:var(--surface2);border-radius:100px;height:12px;overflow:hidden;margin-bottom:8px}
+.score-bar-fill{height:100%;border-radius:100px;transition:width 1s ease;width:0}
+.math-bar{background:linear-gradient(90deg,#c8952a,var(--gold))}
+.sci-bar{background:linear-gradient(90deg,#27a089,var(--teal))}
+.score-bar-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
+.breakdown-title{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:20px;text-align:center}
+.breakdown-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:60px}
+.bq-row{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:var(--radius);border:1px solid var(--border)}
+.bq-row.correct{background:rgba(74,222,128,.04);border-color:rgba(74,222,128,.2)}
+.bq-row.wrong{background:rgba(224,88,88,.04);border-color:rgba(224,88,88,.2)}
+.bq-icon{font-size:16px;flex-shrink:0;margin-top:2px}
+.bq-body{flex:1;min-width:0}
+.bq-num{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:3px}
+.bq-q{font-size:14px;line-height:1.5;color:var(--text);margin-bottom:4px}
+.bq-answer{font-size:13px}
+.bq-answer .correct-ans{color:var(--success)}
+.bq-answer .wrong-ans{color:var(--danger)}
+.results-actions{display:flex;gap:12px;justify-content:center;padding-bottom:60px;flex-wrap:wrap}
+.btn-retake,.btn-other{padding:12px 28px;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;border:1px solid var(--border2);background:transparent;color:var(--muted)}
+.btn-retake:hover,.btn-other:hover{border-color:var(--text);color:var(--text)}
+.btn-submit-another{padding:12px 28px;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;border:none}
+.math-submit-another{background:var(--gold);color:#0d0f14}
+.sci-submit-another{background:var(--teal);color:#0d0f14}
+.btn-submit-another:hover{opacity:.9}
 
-  .badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--gold-dim); border: 1px solid rgba(232,184,75,0.3);
-    border-radius: 100px; padding: 6px 18px;
-    font-size: 12px; font-weight: 500; letter-spacing: 0.06em;
-    color: var(--gold); text-transform: uppercase; margin-bottom: 28px;
-  }
-  .badge::before { content: '✦'; font-size: 10px; }
-
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(38px, 7vw, 64px);
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    margin-bottom: 20px;
-  }
-  h1 em { font-style: italic; color: var(--gold); }
-
-  .subtitle {
-    font-size: 17px; font-weight: 300; color: var(--muted); line-height: 1.7;
-    max-width: 500px; margin: 0 auto 48px;
-  }
-
-  /* ─── subject pills ─── */
-  .subjects {
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 52px;
-  }
-  .pill {
-    display: inline-flex; align-items: center; gap: 7px;
-    background: var(--surface); border: 1px solid var(--border2);
-    border-radius: 100px; padding: 8px 18px;
-    font-size: 13px; color: var(--muted); transition: all 0.2s;
-    cursor: default;
-  }
-  .pill .dot {
-    width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
-  }
-  .pill:nth-child(1) .dot { background: #e8b84b; }
-  .pill:nth-child(2) .dot { background: #3fd8c0; }
-  .pill:nth-child(3) .dot { background: #8b7cf8; }
-  .pill:nth-child(4) .dot { background: #e05858; }
-  .pill:nth-child(5) .dot { background: #54a7f5; }
-  .pill:nth-child(6) .dot { background: #7bd97b; }
-
-  /* ─── form card ─── */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border2);
-    border-radius: var(--radius-lg);
-    padding: 48px;
-    margin-bottom: 80px;
-  }
-
-  .card-header {
-    display: flex; align-items: center; gap: 14px; margin-bottom: 36px;
-  }
-  .icon-wrap {
-    width: 44px; height: 44px; border-radius: 10px;
-    background: var(--gold-dim); border: 1px solid rgba(232,184,75,0.25);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-  }
-  .card-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px; font-weight: 600;
-  }
-  .card-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
-
-  /* ─── form ─── */
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } .card { padding: 28px 22px; } }
-
-  .field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-  .field:last-of-type { margin-bottom: 0; }
-
-  label {
-    font-size: 13px; font-weight: 500; color: var(--muted);
-    letter-spacing: 0.04em; text-transform: uppercase;
-  }
-  label span { color: var(--gold); }
-
-  input, select, textarea {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 13px 16px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    width: 100%;
-    appearance: none;
-  }
-  input::placeholder, textarea::placeholder { color: #454858; }
-  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a7d8a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; cursor: pointer; }
-  select option { background: #1c2030; }
-  textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
-
-  input:focus, select:focus, textarea:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px var(--gold-dim);
-  }
-  input.error, select.error, textarea.error {
-    border-color: var(--danger);
-    box-shadow: 0 0 0 3px rgba(224,88,88,0.12);
-  }
-
-  .hint { font-size: 12px; color: var(--muted); margin-top: -4px; }
-  .err-msg { font-size: 12px; color: var(--danger); display: none; }
-  .err-msg.show { display: block; }
-
-  /* ─── difficulty slider ─── */
-  .difficulty-wrap { margin-bottom: 20px; }
-  .difficulty-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-top: 8px; }
-  input[type=range] {
-    padding: 0; height: 6px; border-radius: 100px; cursor: pointer;
-    background: var(--surface2); border: none; box-shadow: none;
-    accent-color: var(--gold);
-  }
-  input[type=range]:focus { box-shadow: none; }
-  .diff-value {
-    font-family: 'DM Mono', monospace;
-    font-size: 13px; color: var(--gold);
-    background: var(--gold-dim); border: 1px solid rgba(232,184,75,0.25);
-    border-radius: 6px; padding: 2px 10px; display: inline-block;
-  }
-
-  /* ─── divider ─── */
-  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
-
-  /* ─── submit button ─── */
-  .btn-submit {
-    width: 100%; padding: 16px;
-    background: var(--gold); color: #0d0f14;
-    font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 500;
-    border: none; border-radius: var(--radius); cursor: pointer;
-    transition: opacity 0.2s, transform 0.15s;
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    margin-top: 28px; letter-spacing: 0.01em;
-  }
-  .btn-submit:hover { opacity: 0.9; }
-  .btn-submit:active { transform: scale(0.985); }
-  .btn-submit svg { width: 18px; height: 18px; }
-
-  /* ─── success / sending states ─── */
-  .btn-submit.sending { opacity: 0.7; pointer-events: none; }
-  
-  .success-card {
-    display: none; flex-direction: column; align-items: center; text-align: center;
-    padding: 64px 48px; gap: 16px;
-  }
-  .success-card.show { display: flex; }
-  .form-inner.hide { display: none; }
-
-  .success-icon {
-    width: 64px; height: 64px; border-radius: 50%;
-    background: var(--teal-dim); border: 1px solid rgba(63,216,192,0.3);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px; margin-bottom: 8px;
-  }
-  .success-card h2 { font-family: 'Playfair Display', serif; font-size: 26px; }
-  .success-card p { color: var(--muted); font-size: 15px; line-height: 1.6; max-width: 340px; }
-  .btn-reset {
-    margin-top: 8px; background: transparent; border: 1px solid var(--border2);
-    color: var(--muted); border-radius: var(--radius); padding: 10px 24px;
-    font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .btn-reset:hover { border-color: var(--gold); color: var(--gold); }
-
-  /* ─── footer ─── */
-  footer {
-    text-align: center; padding: 24px 0 48px;
-    font-size: 13px; color: #3a3d4a;
-  }
-  footer a { color: var(--muted); text-decoration: none; }
-  footer a:hover { color: var(--gold); }
-
-  /* ─── entrance animation ─── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  header  { animation: fadeUp 0.6s ease both; }
-  .subjects { animation: fadeUp 0.6s 0.1s ease both; }
-  .card   { animation: fadeUp 0.6s 0.2s ease both; }
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.katex{font-size:1em}
 </style>
 </head>
 <body>
-
 <div class="glow glow-a"></div>
 <div class="glow glow-b"></div>
 
-<div class="wrap">
-
-  <header>
-    <div class="badge">Math & Science Tutoring</div>
-    <h1>Got a tough problem? <br/><em>Let's solve it.</em></h1>
-    <p class="subtitle">Send me your math or science questions and I'll work through them with you. No problem is too hard — or too easy.</p>
-  </header>
-
-  <div class="subjects">
-    <div class="pill"><span class="dot"></span>Algebra &amp; Calculus</div>
-    <div class="pill"><span class="dot"></span>Physics</div>
-    <div class="pill"><span class="dot"></span>Chemistry</div>
-    <div class="pill"><span class="dot"></span>Statistics</div>
-    <div class="pill"><span class="dot"></span>Biology</div>
-    <div class="pill"><span class="dot"></span>Geometry</div>
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-brand">Ask <span>Sean</span></div>
+    <div class="nav-links">
+      <button class="nav-btn" id="nav-home" onclick="showPage('home')">Submit a Problem</button>
+      <button class="nav-btn nav-test-btn" id="nav-test" onclick="showPage('hub')">⚗ Diagnostic Test</button>
+    </div>
   </div>
+</nav>
 
-  <div class="card">
-
-    <div class="card-header">
-      <div class="icon-wrap">✉</div>
-      <div>
-        <div class="card-title">Submit a Problem</div>
-        <div class="card-sub">I'll reply to your email with a full solution</div>
+<!-- ═══════════════ HOME PAGE ═══════════════ -->
+<div class="page visible" id="pg-home">
+  <div class="wrap">
+    <header>
+      <div class="badge">Math & Science Tutoring</div>
+      <h1>Got a tough problem? <br/><em>Let's solve it.</em></h1>
+      <p class="subtitle">Send me your math or science questions and I'll work through them with you. No problem is too hard — or too easy.</p>
+    </header>
+    <div class="subjects">
+      <div class="pill"><span class="dot"></span>Algebra &amp; Calculus</div>
+      <div class="pill"><span class="dot"></span>Physics</div>
+      <div class="pill"><span class="dot"></span>Chemistry</div>
+      <div class="pill"><span class="dot"></span>Statistics</div>
+      <div class="pill"><span class="dot"></span>Biology</div>
+      <div class="pill"><span class="dot"></span>Geometry</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="icon-wrap">✉</div>
+        <div>
+          <div class="card-title">Submit a Problem</div>
+          <div class="card-sub">I'll reply to your email with a full solution</div>
+        </div>
+      </div>
+      <div class="success-card" id="successCard">
+        <div class="success-icon">✓</div>
+        <h2>Problem sent!</h2>
+        <p>Your problem has been sent to Sean. Expect a reply soon — keep an eye on your inbox.</p>
+        <button class="btn-reset" id="btnReset">Submit another problem</button>
+      </div>
+      <div class="form-inner" id="formInner">
+        <form id="problemForm" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="name">Your name <span>*</span></label>
+              <input type="text" id="name" placeholder="Alex Johnson" autocomplete="name"/>
+              <span class="err-msg" id="name-err">Please enter your name.</span>
+            </div>
+            <div class="field">
+              <label for="email">Your email <span>*</span></label>
+              <input type="email" id="email" placeholder="you@example.com" autocomplete="email"/>
+              <span class="err-msg" id="email-err">Please enter a valid email.</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="subject">Subject <span>*</span></label>
+              <select id="subject">
+                <option value="" disabled selected>Choose a subject…</option>
+                <optgroup label="Mathematics">
+                  <option>Algebra</option><option>Calculus</option>
+                  <option>Statistics &amp; Probability</option><option>Geometry &amp; Trigonometry</option>
+                  <option>Linear Algebra</option><option>Discrete Mathematics</option><option>Other Mathematics</option>
+                </optgroup>
+                <optgroup label="Science">
+                  <option>Physics</option><option>Chemistry</option><option>Biology</option>
+                  <option>Earth &amp; Space Science</option><option>Other Science</option>
+                </optgroup>
+              </select>
+              <span class="err-msg" id="subject-err">Please select a subject.</span>
+            </div>
+            <div class="field">
+              <label for="level">Education level</label>
+              <select id="level">
+                <option value="" disabled selected>Select level…</option>
+                <option>Middle School</option><option>High School</option>
+                <option>University / College</option><option>Graduate Level</option><option>Self-studying</option>
+              </select>
+            </div>
+          </div>
+          <div class="field" style="margin-bottom:18px">
+            <label for="difficulty">Difficulty — <span class="diff-value" id="diffDisplay">5 / 10</span></label>
+            <input type="range" id="difficulty" min="1" max="10" value="5" step="1"/>
+            <div class="difficulty-labels"><span>Easy</span><span>Medium</span><span>Very Hard</span></div>
+          </div>
+          <div class="field">
+            <label for="problem">Problem statement <span>*</span></label>
+            <textarea id="problem" placeholder="Describe your problem in detail — include equations, formulas, or any context that helps…"></textarea>
+            <span class="err-msg" id="problem-err">Please describe your problem (at least 10 characters).</span>
+          </div>
+          <div class="field">
+            <label for="attempt">Your attempt <small style="font-size:11px;color:#454858;text-transform:none;letter-spacing:0">(optional)</small></label>
+            <textarea id="attempt" placeholder="What have you tried so far? Where are you getting stuck?" style="min-height:90px"></textarea>
+          </div>
+          <hr class="divider"/>
+          <div class="field">
+            <label for="context">Additional context</label>
+            <input type="text" id="context" placeholder="e.g. exam prep, homework, curiosity…"/>
+            <div class="hint">The more context you share, the better I can help.</div>
+          </div>
+          <button type="submit" class="btn-submit" id="btnSubmit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send Problem to Sean
+          </button>
+        </form>
       </div>
     </div>
+    <footer>Problems go directly to <a href="mailto:sssean.kk@gmail.com">sssean.kk@gmail.com</a> — replies usually within 24 hours.</footer>
+  </div>
+</div>
 
-    <!-- SUCCESS STATE -->
-    <div class="success-card" id="successCard">
-      <div class="success-icon">✓</div>
-      <h2>Problem sent!</h2>
-      <p>Your problem has been sent to Sean. Expect a reply soon — keep an eye on your inbox.</p>
-      <button class="btn-reset" id="btnReset">Submit another problem</button>
+<!-- ═══════════════ HUB PAGE ═══════════════ -->
+<div class="page" id="pg-hub">
+  <div class="wrap-lg">
+    <div class="hub-header">
+      <div class="badge">Diagnostic Testing</div>
+      <h2>Choose Your <em>Test</em></h2>
+      <p>30 questions each, multiple choice — five options per question. See how you score.</p>
     </div>
-
-    <!-- FORM -->
-    <div class="form-inner" id="formInner">
-      <form id="problemForm" novalidate>
-
-        <div class="form-row">
-          <div class="field">
-            <label for="name">Your name <span>*</span></label>
-            <input type="text" id="name" name="name" placeholder="Alex Johnson" autocomplete="name" />
-            <span class="err-msg" id="name-err">Please enter your name.</span>
-          </div>
-          <div class="field">
-            <label for="email">Your email <span>*</span></label>
-            <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" />
-            <span class="err-msg" id="email-err">Please enter a valid email.</span>
-          </div>
+    <div class="test-grid">
+      <div class="test-card math-card" onclick="startTest('math')">
+        <div class="tc-icon">∑</div>
+        <div class="tc-title">Mathematics</div>
+        <div class="tc-desc">Algebra, geometry, statistics, trigonometry, sequences, probability, and more.</div>
+        <div class="tc-pills">
+          <span class="tc-pill">Algebra</span><span class="tc-pill">Geometry</span><span class="tc-pill">Statistics</span>
+          <span class="tc-pill">Indices</span><span class="tc-pill">Trigonometry</span><span class="tc-pill">Probability</span>
         </div>
-
-        <div class="form-row">
-          <div class="field">
-            <label for="subject">Subject <span>*</span></label>
-            <select id="subject" name="subject">
-              <option value="" disabled selected>Choose a subject…</option>
-              <optgroup label="Mathematics">
-                <option>Algebra</option>
-                <option>Calculus</option>
-                <option>Statistics &amp; Probability</option>
-                <option>Geometry &amp; Trigonometry</option>
-                <option>Linear Algebra</option>
-                <option>Discrete Mathematics</option>
-                <option>Other Mathematics</option>
-              </optgroup>
-              <optgroup label="Science">
-                <option>Physics</option>
-                <option>Chemistry</option>
-                <option>Biology</option>
-                <option>Earth &amp; Space Science</option>
-                <option>Other Science</option>
-              </optgroup>
-            </select>
-            <span class="err-msg" id="subject-err">Please select a subject.</span>
-          </div>
-          <div class="field">
-            <label for="level">Education level</label>
-            <select id="level" name="level">
-              <option value="" disabled selected>Select level…</option>
-              <option>Middle School</option>
-              <option>High School</option>
-              <option>University / College</option>
-              <option>Graduate Level</option>
-              <option>Self-studying</option>
-            </select>
-          </div>
+        <button class="btn-start">Start Math Test →</button>
+      </div>
+      <div class="test-card sci-card" onclick="startTest('sci')">
+        <div class="tc-icon">⚗</div>
+        <div class="tc-title">Science</div>
+        <div class="tc-desc">Physics, chemistry, biology, earth science — across core concepts and applications.</div>
+        <div class="tc-pills">
+          <span class="tc-pill">Physics</span><span class="tc-pill">Chemistry</span><span class="tc-pill">Biology</span>
+          <span class="tc-pill">Genetics</span><span class="tc-pill">Earth Sci</span><span class="tc-pill">Waves</span>
         </div>
-
-        <div class="field difficulty-wrap">
-          <label for="difficulty">Difficulty — <span class="diff-value" id="diffDisplay">5 / 10</span></label>
-          <input type="range" id="difficulty" name="difficulty" min="1" max="10" value="5" step="1" />
-          <div class="difficulty-labels"><span>Easy</span><span>Medium</span><span>Very Hard</span></div>
-        </div>
-
-        <div class="field">
-          <label for="problem">Problem statement <span>*</span></label>
-          <textarea id="problem" name="problem" placeholder="Describe your problem here. Be as specific as possible — include equations, formulas, or context that might help. You can use standard notation like x^2, sqrt(x), or fractions like 3/4."></textarea>
-          <span class="err-msg" id="problem-err">Please describe your problem.</span>
-        </div>
-
-        <div class="field">
-          <label for="attempt">Your attempt <small style="font-size:11px;color:#454858;text-transform:none;letter-spacing:0">(optional but helpful)</small></label>
-          <textarea id="attempt" name="attempt" placeholder="Show what you've tried so far, where you got stuck, or what approach you think might work…" style="min-height:100px;"></textarea>
-        </div>
-
-        <hr class="divider" />
-
-        <div class="field">
-          <label for="context">Additional context</label>
-          <input type="text" id="context" name="context" placeholder="e.g. exam prep, homework, curiosity — anything that helps me tailor the answer" />
-          <div class="hint">The more context you share, the better I can help.</div>
-        </div>
-
-        <button type="submit" class="btn-submit" id="btnSubmit">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-          Send Problem to Sean
-        </button>
-
-      </form>
+        <button class="btn-start">Start Science Test →</button>
+      </div>
     </div>
+  </div>
+</div>
 
-  </div><!-- card -->
+<!-- ═══════════════ TEST PAGE ═══════════════ -->
+<div class="page" id="pg-test">
+  <div class="wrap">
+    <div class="test-header">
+      <div class="test-meta">
+        <span class="test-subject-tag" id="test-tag">Mathematics</span>
+        <div class="test-counter">Question <strong id="q-current">1</strong> of <strong id="q-total">30</strong></div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-fill" style="width:3.3%"></div></div>
+        <div class="progress-label"><span id="prog-answered">0</span> answered</div>
+      </div>
+    </div>
+    <div class="q-dot-row" id="dot-row"></div>
+    <div class="q-card" id="q-card">
+      <div class="q-topic" id="q-topic"></div>
+      <div class="q-text" id="q-text"></div>
+      <div class="choices" id="q-choices"></div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-prev" id="btn-prev" onclick="navigate(-1)">← Previous</button>
+      <button class="btn-submit-test" id="btn-submit-test" onclick="submitTest()">Submit Test</button>
+      <button class="btn-next" id="btn-next" onclick="navigate(1)">Next →</button>
+    </div>
+  </div>
+</div>
 
-  <footer>
-    Problems go directly to <a href="mailto:sssean.kk@gmail.com">sssean.kk@gmail.com</a> — replies usually within 24 hours.
-  </footer>
+<!-- ═══════════════ RESULTS PAGE ═══════════════ -->
+<div class="page" id="pg-results">
+  <div class="wrap">
+    <div class="results-header">
+      <div class="score-circle" id="res-circle">
+        <div class="score-num" id="res-score">0</div>
+        <div class="score-denom">out of 30</div>
+      </div>
+      <div class="band-badge" id="res-band">—</div>
+      <br/>
+      <div class="results-desc" id="res-desc"></div>
+      <div class="score-bar-wrap">
+        <div class="score-bar-bg"><div class="score-bar-fill" id="res-bar"></div></div>
+        <div class="score-bar-labels"><span>0</span><span>7</span><span>14</span><span>21</span><span>28</span><span>30</span></div>
+      </div>
+    </div>
+    <h3 class="breakdown-title">Question Breakdown</h3>
+    <div class="breakdown-grid" id="breakdown-grid"></div>
+    <div class="results-actions">
+      <button class="btn-retake" onclick="retakeTest()">↺ Retake This Test</button>
+      <button class="btn-other" id="btn-other-test" onclick="showPage('hub')">Try Other Test</button>
+      <button class="btn-submit-another" id="btn-submit-another" onclick="showPage('home')">Submit a Problem to Sean</button>
+    </div>
+  </div>
+</div>
 
-</div><!-- wrap -->
+<!-- KaTeX -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/contrib/auto-render.min.js"></script>
 
 <script>
+// ═══════════════ QUESTION DATA ═══════════════
+const MATH = [
+  {topic:"Algebra", q:"If \\(a = 2\\), \\(b = -3\\), and \\(c = 1\\), evaluate \\(3a - 2b + c\\).", ch:["11","13","9","\\(-1\\)","7"], ans:1},
+  {topic:"Geometry", q:"A rhombus has diagonals of length \\(10\\) cm and \\(6\\) cm. What is its area?", ch:["\\(60 \\text{ cm}^2\\)","\\(48 \\text{ cm}^2\\)","\\(30 \\text{ cm}^2\\)","\\(15 \\text{ cm}^2\\)","\\(20 \\text{ cm}^2\\)"], ans:2},
+  {topic:"Algebra", q:"Factorise completely: \\(x^2 - 16\\)", ch:["\\((x-4)^2\\)","\\((x+4)(x-4)\\)","\\((x+2)(x-8)\\)","\\((x-4)(x+2)\\)","\\((x+16)(x-1)\\)"], ans:1},
+  {topic:"Algebra", q:"Factorise completely: \\(3x + 6 + 2a(3x + 6)\\)", ch:["\\(3(x+2)(1+2a)\\)","\\((3x+6)(2a)\\)","\\(3x(1+2a)+6\\)","\\((3x+6+2a)\\)","\\(2(3x+1+3a)\\)"], ans:0},
+  {topic:"Indices", q:"Simplify \\(8^{\\frac{2}{3}} \\times 9^{-\\frac{1}{2}}\\)", ch:["\\(\\dfrac{4}{3}\\)","\\(\\dfrac{2}{3}\\)","\\(\\dfrac{4}{9}\\)","\\(12\\)","\\(\\dfrac{3}{4}\\)"], ans:0},
+  {topic:"Statistics", q:"A dataset has \\(Q_1 = 15\\) and \\(Q_3 = 28\\). What is the interquartile range (IQR)?", ch:["43","21.5","13","6.5","28"], ans:2},
+  {topic:"Statistics", q:"A box-and-whisker plot shows: minimum \\(= 5\\), \\(Q_1 = 12\\), median \\(= 16\\), \\(Q_3 = 20\\), maximum \\(= 30\\). What is the IQR?", ch:["4","8","16","32","6"], ans:1},
+  {topic:"Geometry", q:"Two triangles are similar. The first has sides \\(3\\) cm, \\(4\\) cm, and \\(5\\) cm. If the hypotenuse of the second triangle is \\(20\\) cm, what is its shortest side?", ch:["9 cm","16 cm","12 cm","15 cm","8 cm"], ans:2},
+  {topic:"Variation", q:"\\(M\\) varies directly as the square of \\(N\\). When \\(N = 10\\), \\(M = 200\\). Find \\(M\\) when \\(N = 5\\).", ch:["100","25","50","40","80"], ans:2},
+  {topic:"Probability", q:"In a Venn diagram: \\(A\\) only \\(= 8\\), \\(B\\) only \\(= 10\\), both \\(= 4\\), neither \\(= 3\\). What is \\(P(\\text{B only})\\)?", ch:["\\(\\dfrac{2}{5}\\)","\\(\\dfrac{4}{25}\\)","\\(\\dfrac{14}{25}\\)","\\(\\dfrac{10}{21}\\)","\\(\\dfrac{1}{4}\\)"], ans:0},
+  {topic:"Time", q:"How many minutes are there in \\(4.5\\) days?", ch:["5 040","6 480","5 400","7 200","4 320"], ans:1},
+  {topic:"Ratio", q:"A \\(40\\)-litre mixture of milk and water is in the ratio \\(3:1\\). How many litres of water are in the mixture?", ch:["10","30","8","12","20"], ans:0},
+  {topic:"Percentage", q:"A car costs \\$5 000 and a 15% deposit is paid upfront. How much remains to be paid?", ch:["\\$3 750","\\$4 500","\\$4 250","\\$750","\\$4 000"], ans:2},
+  {topic:"Indices", q:"Simplify \\(a^8 \\div a^3\\)", ch:["\\(a^{11}\\)","\\(a^5\\)","\\(a^{24}\\)","\\(\\dfrac{1}{a^5}\\)","\\(a^2\\)"], ans:1},
+  {topic:"Percentage", q:"60% of a number is 72. What is the number?", ch:["43.2","120","100","108","130"], ans:1},
+  {topic:"Algebra", q:"Factorise: \\(9x^2 - 4\\)", ch:["\\((9x-4)(x+1)\\)","\\((3x-2)^2\\)","\\((3x+2)(3x-2)\\)","\\((3x+4)(3x-1)\\)","\\(3(3x^2-4)\\)"], ans:2},
+  {topic:"Trigonometry", q:"In a right triangle, angle \\(A = 30°\\) and the hypotenuse is \\(10\\) cm. What is the length of the side opposite angle \\(A\\)?", ch:["5 cm","8.66 cm","10 cm","5.77 cm","2.5 cm"], ans:0},
+  {topic:"Linear Equations", q:"Find the equation of the line passing through \\((-1,\\,3)\\) with gradient \\(2\\).", ch:["\\(y = 2x + 1\\)","\\(y = 2x - 5\\)","\\(y = 2x + 5\\)","\\(y = 3x + 2\\)","\\(y = 2x + 3\\)"], ans:2},
+  {topic:"Circle Geometry", q:"A central angle of \\(80°\\) and an inscribed angle both subtend the same arc. What is the measure of the inscribed angle?", ch:["40°","80°","160°","100°","20°"], ans:0},
+  {topic:"Mensuration", q:"Find the volume of a sphere with radius \\(6\\) m. (Use \\(\\pi \\approx 3.14\\))", ch:["904.32 m³","452.16 m³","301.44 m³","150.72 m³","1 357.17 m³"], ans:0},
+  {topic:"Indices", q:"Solve for \\(x\\): \\(\\quad 2^x \\div 2^3 = 2^5\\)", ch:["2","8","15","\\(-2\\)","3"], ans:1},
+  {topic:"Graphs", q:"Find the \\(x\\)-coordinates of the points of intersection of \\(y = x^2\\) and \\(y = 2x + 3\\).", ch:["\\(x = 3\\) and \\(x = -1\\)","\\(x = -3\\) and \\(x = 1\\)","\\(x = 1\\) and \\(x = 3\\)","\\(x = -1\\) and \\(x = -3\\)","\\(x = 0\\) and \\(x = 3\\)"], ans:0},
+  {topic:"Graphs", q:"A parabola opens upward and crosses the \\(x\\)-axis at \\(x = -1\\) and \\(x = 3\\). Which equation matches this parabola?", ch:["\\(y = x^2 + 2x + 3\\)","\\(y = x^2 - 2x - 3\\)","\\(y = x^2 + 2x - 3\\)","\\(y = x^2 - 2x + 3\\)","\\(y = 2x^2 - 4x - 6\\)"], ans:1},
+  {topic:"Probability", q:"A bag contains 5 red, 3 green, and 2 blue balls. Two balls are drawn at random without replacement. Find \\(P(\\text{one blue and one green})\\).", ch:["\\(\\dfrac{6}{45}\\)","\\(\\dfrac{1}{5}\\)","\\(\\dfrac{2}{15}\\)","\\(\\dfrac{1}{15}\\)","\\(\\dfrac{4}{30}\\)"], ans:2},
+  {topic:"Sequences", q:"An arithmetic sequence has its 5th term \\(= 17\\) and 7th term \\(= 25\\). Find the sum of the first 10 terms.", ch:["180","190","200","170","210"], ans:1},
+  {topic:"Combinatorics", q:"A restaurant offers 5 entrées, 6 main meals, and 4 desserts. How many different 3-course combinations are possible?", ch:["15","60","120","100","240"], ans:2},
+  {topic:"Coordinate Geometry", q:"What is the distance between the points \\((3,\\,-2)\\) and \\((-1,\\,4)\\)?", ch:["\\(2\\sqrt{13}\\)","\\(10\\)","\\(\\sqrt{28}\\)","\\(2\\sqrt{5}\\)","\\(\\sqrt{44}\\)"], ans:0},
+  {topic:"Surds", q:"Rationalise the denominator: \\(\\dfrac{3+\\sqrt{2}}{3-\\sqrt{2}}\\)", ch:["\\(\\dfrac{11+6\\sqrt{2}}{7}\\)","\\(\\dfrac{11-6\\sqrt{2}}{7}\\)","\\(\\dfrac{7+6\\sqrt{2}}{3}\\)","\\(\\dfrac{11}{7}\\)","\\(\\dfrac{11}{7}+\\sqrt{2}\\)"], ans:0},
+  {topic:"Sequences", q:"Find the next term in the geometric series: \\(2,\\; 6,\\; 18,\\; 54,\\; ?\\)", ch:["108","162","216","150","180"], ans:1},
+  {topic:"Time & Rates", q:"A tram crosses a bridge every 8 minutes, with the first crossing at 6:00 AM. After 4:00 PM, what is the next time the tram crosses the bridge exactly on the hour?", ch:["5:00 PM","5:20 PM","6:00 PM","4:08 PM","5:40 PM"], ans:2}
+];
+
+const SCI = [
+  {topic:"Chemistry", q:"Which subatomic particle determines which element an atom belongs to?", ch:["Neutrons","Protons","Electrons","Nucleons","Quarks"], ans:1},
+  {topic:"Physics — Waves", q:"A wave has a frequency of \\(10\\) Hz and a wavelength of \\(5\\) m. Using \\(v = f\\lambda\\), what is the wave speed?", ch:["2 m/s","15 m/s","50 m/s","0.5 m/s","100 m/s"], ans:2},
+  {topic:"Physics — Forces", q:"Jess uses a lever to lift a rock weighing \\(600\\) N by applying an effort of \\(150\\) N. Using \\(\\text{MA} = \\dfrac{\\text{load}}{\\text{effort}}\\), what is the mechanical advantage?", ch:["2","3","4","450","0.25"], ans:2},
+  {topic:"Biology — Genetics", q:"Using DNA base-pairing rules (A pairs with T, G pairs with C), what is the complementary strand for the sequence AGTC?", ch:["TCAG","CATG","TGCA","AGCT","GCTA"], ans:0},
+  {topic:"Chemistry — Acids & Bases", q:"A solution with a pH of 7 is described as:", ch:["Strongly acidic","Neutral","Strongly basic","Weakly acidic","Weakly basic"], ans:1},
+  {topic:"Biology — Ecology", q:"In a food chain, which organism is able to produce its own food through photosynthesis?", ch:["Consumer","Decomposer","Producer","Herbivore","Carnivore"], ans:2},
+  {topic:"Chemistry — Periodic Table", q:"Which element on the periodic table has atomic number 11?", ch:["Carbon","Magnesium","Sodium","Aluminum","Chlorine"], ans:2},
+  {topic:"Physics — Electricity", q:"Using Ohm's Law \\((V = IR)\\), if \\(V = 12\\) V and \\(R = 4\\) Ω, what is the current \\(I\\)?", ch:["8 A","48 A","3 A","0.33 A","16 A"], ans:2},
+  {topic:"Biology — Photosynthesis", q:"Which gas do plants absorb from the atmosphere as a raw material for photosynthesis?", ch:["Oxygen","Nitrogen","Carbon dioxide","Hydrogen","Helium"], ans:2},
+  {topic:"Physics — Motion", q:"Which unit is used to measure force?", ch:["Joule","Watt","Newton","Pascal","Coulomb"], ans:2},
+  {topic:"Chemistry — Atomic Structure", q:"An atom has 11 protons, 12 neutrons, and 11 electrons. What is its overall electrical charge?", ch:["+1","−1","0","+2","−2"], ans:2},
+  {topic:"Physics — Light", q:"The approximate speed of light in a vacuum is:", ch:["\\(3 \\times 10^{6}\\) m/s","\\(3 \\times 10^{8}\\) m/s","\\(3 \\times 10^{10}\\) m/s","\\(3 \\times 10^{4}\\) m/s","\\(3 \\times 10^{12}\\) m/s"], ans:1},
+  {topic:"Biology — Ecology", q:"In ecology, kite diagrams are primarily used to display:", ch:["Food web structure","Population distribution along a transect","Energy flow between trophic levels","Nutrient cycles","Animal migration patterns"], ans:1},
+  {topic:"Earth Science", q:"In a cliff face made up of multiple undisturbed rock layers, the oldest rocks are found:", ch:["At the very top","At the very bottom","In the middle layer","Scattered randomly","On the outermost surface"], ans:1},
+  {topic:"Biology — Cell Biology", q:"Which cell organelle is primarily responsible for producing energy (ATP) for the cell?", ch:["Nucleus","Ribosome","Cell membrane","Mitochondria","Vacuole"], ans:3},
+  {topic:"Chemistry — Acids & Bases", q:"The pH scale used to classify solutions as acidic or basic ranges from:", ch:["0 to 7","0 to 14","1 to 14","0 to 10","−7 to 7"], ans:1},
+  {topic:"Chemistry — Periodic Table", q:"Which statement best describes Group 1 elements (alkali metals)?", ch:["They are non-metals at room temperature","They are soft solids that react vigorously with water","They are hard and very dense","They are poor conductors of electricity","They are highly unreactive"], ans:1},
+  {topic:"Biology — Photosynthesis", q:"In the overall equation for photosynthesis, plants take in CO₂ and water and release:", ch:["Carbon dioxide","Water","Oxygen","Nitrogen","Methane"], ans:2},
+  {topic:"Physics — Forces", q:"Newton's First Law of Motion states that:", ch:["Force = mass × acceleration","For every action there is an equal and opposite reaction","An object at rest stays at rest unless a net force acts on it","Pressure = force ÷ area","Energy is always conserved"], ans:2},
+  {topic:"Chemistry — Reactions", q:"In the reaction \\(\\text{BaCl}_2 + \\text{Na}_2\\text{SO}_4 \\rightarrow \\text{BaSO}_4 + 2\\text{NaCl}\\), which product forms as a white precipitate?", ch:["NaCl","Na₂SO₄","BaCl₂","BaSO₄","NaOH"], ans:3},
+  {topic:"Chemistry — pH Indicators", q:"Jake wants to measure a swimming pool's pH as accurately as possible near 7.8. Which indicator changes colour most precisely in this range?", ch:["Litmus","Methyl orange","Bromothymol blue","Phenolphthalein","Phenol red"], ans:2},
+  {topic:"Earth Science — Stars", q:"Using a star colour–temperature key (blue ≈ 40 000°C hottest; red ≈ 2 000°C coolest), how do red stars compare to blue stars?", ch:["They are hotter","They are cooler","They are the same temperature","Their temperature is variable","Their temperatures cannot be compared"], ans:1},
+  {topic:"Physics — Waves", q:"A child shakes a slinky at \\(4\\) Hz. The waves produced are \\(25\\) cm long. What is the speed of the waves?", ch:["100 m/s","0.01 m/s","1 m/s","6.25 m/s","4.25 m/s"], ans:2},
+  {topic:"Biology — Genetics", q:"DNA replication is described as semi-conservative. This means each new DNA double helix contains:", ch:["Two entirely new strands","One original strand and one new strand","Two original strands","Fragments from both strands randomly mixed","Only RNA strands"], ans:1},
+  {topic:"Physics — Waves", q:"Which type of wave requires a material medium (such as air, water, or a solid) to travel through?", ch:["Light","X-rays","Radio waves","Sound","Gamma rays"], ans:3},
+  {topic:"Biology — Genetics", q:"In a monohybrid cross between two heterozygous parents \\((Aa \\times Aa)\\), what fraction of offspring are expected to show the recessive phenotype?", ch:["\\(\\dfrac{1}{4}\\)","\\(\\dfrac{1}{2}\\)","\\(\\dfrac{3}{4}\\)","0","All of them"], ans:0},
+  {topic:"Biology — Biochemistry", q:"Which solution is used as an indicator when testing a food sample for the presence of starch?", ch:["Benedict's solution","Biuret reagent","Iodine solution","Ethanol","Litmus solution"], ans:2},
+  {topic:"Earth Science — Climate", q:"The apparent (felt) temperature is lower than the actual air temperature mainly when:", ch:["Humidity is very high","Wind speed increases","The sun is bright and sky is clear","Atmospheric pressure rises","The sun is directly overhead"], ans:1},
+  {topic:"Chemistry — Formulas", q:"What is the correct chemical formula for water?", ch:["HO","H₂O₂","H₂O","OH₂","2HO"], ans:2},
+  {topic:"Earth Science — Maps", q:"On a topographic (contour) map, contour lines that are very close together indicate:", ch:["A gentle slope","Flat land","A steep slope","A river valley","An ocean trench"], ans:2}
+];
+
+// ═══════════════ STATE ═══════════════
+let currentTest = [];
+let currentIdx = 0;
+let userAnswers = [];
+let testType = 'math';
+
+// ═══════════════ PAGE NAVIGATION ═══════════════
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('visible'));
+  document.getElementById('pg-' + id).classList.add('visible');
+  window.scrollTo(0, 0);
+  // Update nav highlights
+  document.getElementById('nav-home').classList.toggle('active', id === 'home');
+  document.getElementById('nav-test').classList.toggle('active', id === 'hub' || id === 'test' || id === 'results');
+}
+
+function startTest(type) {
+  testType = type;
+  currentTest = type === 'math' ? MATH : SCI;
+  currentIdx = 0;
+  userAnswers = new Array(30).fill(null);
+  showPage('test');
+  // Style by type
+  const isMath = type === 'math';
+  document.getElementById('test-tag').textContent = isMath ? 'Mathematics' : 'Science';
+  document.getElementById('test-tag').className = 'test-subject-tag ' + (isMath ? 'math-tag' : 'sci-tag');
+  document.getElementById('prog-fill').className = 'progress-bar-fill ' + (isMath ? 'math-fill' : 'sci-fill');
+  document.getElementById('btn-submit-test').className = 'btn-submit-test ' + (isMath ? 'math-submit' : 'sci-submit');
+  buildDots();
+  renderQuestion();
+}
+
+// ═══════════════ DOT NAVIGATION ═══════════════
+function buildDots() {
+  const row = document.getElementById('dot-row');
+  row.innerHTML = '';
+  for (let i = 0; i < 30; i++) {
+    const d = document.createElement('button');
+    d.className = 'q-dot';
+    d.textContent = i + 1;
+    d.setAttribute('aria-label', 'Question ' + (i+1));
+    d.onclick = () => { currentIdx = i; renderQuestion(); };
+    row.appendChild(d);
+  }
+}
+
+function updateDots() {
+  const dots = document.querySelectorAll('.q-dot');
+  const cls = testType === 'math' ? 'math-dot' : 'sci-dot';
+  dots.forEach((d, i) => {
+    d.className = 'q-dot';
+    if (userAnswers[i] !== null) d.classList.add('answered', cls);
+    if (i === currentIdx) d.classList.add('current-dot');
+  });
+}
+
+// ═══════════════ RENDER QUESTION ═══════════════
+function renderQuestion() {
+  const q = currentTest[currentIdx];
+  const isMath = testType === 'math';
+  const selClass = isMath ? 'math-sel' : 'sci-sel';
+
+  document.getElementById('q-current').textContent = currentIdx + 1;
+  document.getElementById('q-total').textContent = 30;
+  document.getElementById('q-topic').textContent = q.topic;
+  document.getElementById('q-text').innerHTML = q.q;
+
+  // Choices
+  const letters = ['a', 'b', 'c', 'd', 'e'];
+  const choicesEl = document.getElementById('q-choices');
+  choicesEl.innerHTML = '';
+  q.ch.forEach((ch, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn' + (userAnswers[currentIdx] === i ? ' selected ' + selClass : '');
+    btn.innerHTML = `<span class="choice-letter">${letters[i]})</span><span class="choice-text">${ch}</span>`;
+    btn.onclick = () => selectAnswer(i);
+    choicesEl.appendChild(btn);
+  });
+
+  // Progress
+  const answered = userAnswers.filter(a => a !== null).length;
+  const pct = ((currentIdx + 1) / 30 * 100).toFixed(1);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-answered').textContent = answered;
+
+  // Nav buttons
+  document.getElementById('btn-prev').disabled = currentIdx === 0;
+  const isLast = currentIdx === 29;
+  document.getElementById('btn-next').style.display = isLast ? 'none' : 'inline-block';
+  document.getElementById('btn-submit-test').style.display = isLast ? 'inline-block' : 'none';
+
+  updateDots();
+
+  // Render KaTeX
+  if (window.renderMathInElement) {
+    ['q-text', 'q-choices'].forEach(id => {
+      renderMathInElement(document.getElementById(id), {
+        delimiters: [{left:"\\(",right:"\\)",display:false},{left:"\\[",right:"\\]",display:true}],
+        throwOnError: false
+      });
+    });
+  }
+}
+
+function selectAnswer(i) {
+  userAnswers[currentIdx] = i;
+  renderQuestion();
+}
+
+function navigate(dir) {
+  const next = currentIdx + dir;
+  if (next >= 0 && next < 30) { currentIdx = next; renderQuestion(); }
+}
+
+// ═══════════════ SUBMIT & RESULTS ═══════════════
+function submitTest() {
+  const unanswered = userAnswers.filter(a => a === null).length;
+  if (unanswered > 0) {
+    const go = confirm(`You have ${unanswered} unanswered question${unanswered > 1 ? 's' : ''}. Submit anyway?`);
+    if (!go) return;
+  }
+  showResults();
+}
+
+function showResults() {
+  showPage('results');
+  const isMath = testType === 'math';
+  let score = 0;
+  userAnswers.forEach((a, i) => { if (a === currentTest[i].ans) score++; });
+
+  // Circle
+  document.getElementById('res-circle').className = 'score-circle ' + (isMath ? 'score-circle-math' : 'score-circle-sci');
+  document.getElementById('res-score').className = 'score-num ' + (isMath ? 'math-num' : 'sci-num');
+  document.getElementById('res-score').textContent = score;
+
+  // Band
+  let band = '', bandClass = '', desc = '';
+  if (score <= 14) { band = 'Below Average'; bandClass = 'band-below'; desc = 'Keep practising — review the topics you missed and give it another go.'; }
+  else if (score <= 19) { band = 'Average'; bandClass = 'band-avg'; desc = 'A solid foundation! Focus on the questions you got wrong to push higher.'; }
+  else if (score <= 23) { band = 'High Average'; bandClass = 'band-high'; desc = 'Well done! A few more targeted reviews and you could hit above average.'; }
+  else if (score <= 28) { band = 'Above Average'; bandClass = 'band-above'; desc = 'Impressive performance! You have a strong grasp of most topics.'; }
+  else { band = 'Superior'; bandClass = 'band-superior'; desc = 'Outstanding — top-tier performance across the board! Sean would be impressed.'; }
+
+  document.getElementById('res-band').textContent = band;
+  document.getElementById('res-band').className = 'band-badge ' + bandClass;
+  document.getElementById('res-desc').textContent = desc;
+
+  // Score bar
+  document.getElementById('res-bar').className = 'score-bar-fill ' + (isMath ? 'math-bar' : 'sci-bar');
+  setTimeout(() => {
+    document.getElementById('res-bar').style.width = (score / 30 * 100) + '%';
+  }, 100);
+
+  // Other test button
+  document.getElementById('btn-other-test').textContent = isMath ? 'Try Science Test' : 'Try Math Test';
+  document.getElementById('btn-submit-another').className = 'btn-submit-another ' + (isMath ? 'math-submit-another' : 'sci-submit-another');
+
+  // Breakdown
+  const letters = ['a', 'b', 'c', 'd', 'e'];
+  const grid = document.getElementById('breakdown-grid');
+  grid.innerHTML = '';
+  currentTest.forEach((q, i) => {
+    const userAns = userAnswers[i];
+    const correct = userAns === q.ans;
+    const row = document.createElement('div');
+    row.className = 'bq-row ' + (correct ? 'correct' : 'wrong');
+    const correctLetter = letters[q.ans];
+    const userLetter = userAns !== null ? letters[userAns] : '—';
+    row.innerHTML = `
+      <div class="bq-icon">${correct ? '✅' : '❌'}</div>
+      <div class="bq-body">
+        <div class="bq-num">Q${i+1} · ${q.topic}</div>
+        <div class="bq-q">${q.q}</div>
+        <div class="bq-answer">
+          ${correct
+            ? `<span class="correct-ans">Your answer: (${userLetter}) — Correct!</span>`
+            : `<span class="wrong-ans">Your answer: (${userLetter}) &nbsp;|&nbsp; Correct: (${correctLetter}) ${q.ch[q.ans]}</span>`
+          }
+        </div>
+      </div>`;
+    grid.appendChild(row);
+  });
+
+  // Render KaTeX in results
+  if (window.renderMathInElement) {
+    renderMathInElement(grid, {
+      delimiters: [{left:"\\(",right:"\\)",display:false},{left:"\\[",right:"\\]",display:true}],
+      throwOnError: false
+    });
+  }
+}
+
+function retakeTest() { startTest(testType); }
+
+// ═══════════════ HOME FORM LOGIC ═══════════════
 const diffSlider = document.getElementById('difficulty');
 const diffDisplay = document.getElementById('diffDisplay');
-diffSlider.addEventListener('input', () => {
-  diffDisplay.textContent = diffSlider.value + ' / 10';
-});
+diffSlider.addEventListener('input', () => { diffDisplay.textContent = diffSlider.value + ' / 10'; });
 
 function validate() {
   let ok = true;
-
-  function check(id, errId, testFn) {
-    const el = document.getElementById(id);
-    const err = document.getElementById(errId);
-    if (!testFn(el.value.trim())) {
-      el.classList.add('error'); err.classList.add('show'); ok = false;
-    } else {
-      el.classList.remove('error'); err.classList.remove('show');
-    }
+  function check(id, errId, fn) {
+    const el = document.getElementById(id), err = document.getElementById(errId);
+    if (!fn(el.value.trim())) { el.classList.add('error'); err.classList.add('show'); ok = false; }
+    else { el.classList.remove('error'); err.classList.remove('show'); }
   }
-
-  check('name',    'name-err',    v => v.length > 0);
-  check('email',   'email-err',   v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
-  check('subject', 'subject-err', v => v.length > 0);
-  check('problem', 'problem-err', v => v.length > 10);
+  check('name','name-err', v => v.length > 0);
+  check('email','email-err', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+  check('subject','subject-err', v => v.length > 0);
+  check('problem','problem-err', v => v.length > 10);
   return ok;
 }
 
 document.getElementById('problemForm').addEventListener('submit', function(e) {
   e.preventDefault();
   if (!validate()) return;
-
   const btn = document.getElementById('btnSubmit');
-  btn.classList.add('sending');
-  btn.textContent = 'Opening your email client…';
-
-  const name    = document.getElementById('name').value.trim();
-  const email   = document.getElementById('email').value.trim();
-  const subject = document.getElementById('subject').value;
-  const level   = document.getElementById('level').value || 'Not specified';
-  const diff    = document.getElementById('difficulty').value;
-  const problem = document.getElementById('problem').value.trim();
-  const attempt = document.getElementById('attempt').value.trim();
-  const context = document.getElementById('context').value.trim();
-
-  const body = [
-    `NAME: ${name}`,
-    `REPLY TO: ${email}`,
-    `SUBJECT: ${subject}`,
-    `LEVEL: ${level}`,
-    `DIFFICULTY: ${diff}/10`,
-    '',
-    '─── PROBLEM ───',
-    problem,
-    attempt ? '\n─── THEIR ATTEMPT ───\n' + attempt : '',
-    context ? '\n─── CONTEXT ───\n' + context : ''
-  ].filter(l => l !== undefined).join('\n');
-
-  const mailto = `mailto:sssean.kk@gmail.com`
-    + `?subject=${encodeURIComponent('[Math/Sci] ' + subject + ' — ' + name)}`
-    + `&body=${encodeURIComponent(body)}`;
-
-  window.location.href = mailto;
-
-  setTimeout(() => {
+  btn.classList.add('sending'); btn.textContent = 'Opening your email client…';
+  const n=document.getElementById('name').value.trim(),
+        em=document.getElementById('email').value.trim(),
+        sub=document.getElementById('subject').value,
+        lv=document.getElementById('level').value||'Not specified',
+        df=document.getElementById('difficulty').value,
+        pr=document.getElementById('problem').value.trim(),
+        at=document.getElementById('attempt').value.trim(),
+        cx=document.getElementById('context').value.trim();
+  const body=[`NAME: ${n}`,`REPLY TO: ${em}`,`SUBJECT: ${sub}`,`LEVEL: ${lv}`,`DIFFICULTY: ${df}/10`,``,`─── PROBLEM ───`,pr,at?`\n─── ATTEMPT ───\n${at}`:'',cx?`\n─── CONTEXT ───\n${cx}`:''].join('\n');
+  window.location.href=`mailto:sssean.kk@gmail.com?subject=${encodeURIComponent('[Math/Sci] '+sub+' — '+n)}&body=${encodeURIComponent(body)}`;
+  setTimeout(()=>{
     document.getElementById('formInner').classList.add('hide');
     document.getElementById('successCard').classList.add('show');
   }, 800);
 });
 
-document.getElementById('btnReset').addEventListener('click', () => {
+document.getElementById('btnReset').addEventListener('click', ()=>{
   document.getElementById('problemForm').reset();
-  diffDisplay.textContent = '5 / 10';
+  diffDisplay.textContent='5 / 10';
   document.getElementById('formInner').classList.remove('hide');
   document.getElementById('successCard').classList.remove('show');
-  document.getElementById('btnSubmit').classList.remove('sending');
-  document.getElementById('btnSubmit').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Problem to Sean`;
-  document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
-  document.querySelectorAll('.err-msg').forEach(el => el.classList.remove('show'));
+  const btn=document.getElementById('btnSubmit');
+  btn.classList.remove('sending');
+  btn.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Problem to Sean`;
+  document.querySelectorAll('.error').forEach(el=>el.classList.remove('error'));
+  document.querySelectorAll('.err-msg').forEach(el=>el.classList.remove('show'));
 });
 
-['name','email','subject','problem'].forEach(id => {
-  const el = document.getElementById(id);
-  el.addEventListener('input', () => {
-    el.classList.remove('error');
-    document.getElementById(id + '-err').classList.remove('show');
+['name','email','subject','problem'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',()=>{
+    document.getElementById(id).classList.remove('error');
+    document.getElementById(id+'-err').classList.remove('show');
   });
 });
 </script>
