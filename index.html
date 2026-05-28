@@ -15,6 +15,8 @@
   --gold:#e8b84b;--gold-dim:rgba(232,184,75,0.15);--gold-border:rgba(232,184,75,0.3);
   --teal:#3fd8c0;--teal-dim:rgba(63,216,192,0.12);--teal-border:rgba(63,216,192,0.3);
   --violet:#a78bfa;--violet-dim:rgba(167,139,250,0.13);--violet-border:rgba(167,139,250,0.32);
+  --orange:#f97316;--orange-dim:rgba(249,115,22,0.13);--orange-border:rgba(249,115,22,0.32);
+  --emerald:#34d399;--emerald-dim:rgba(52,211,153,0.13);--emerald-border:rgba(52,211,153,0.32);
   --text:#eceae2;--muted:#7a7d8a;--danger:#e05858;--success:#4ade80;
   --radius:12px;--radius-lg:20px;
 }
@@ -205,6 +207,24 @@ footer a:hover{color:var(--gold)}
 .int-card:hover::before{opacity:1}
 .int-card .tc-title{color:var(--violet)}
 .int-card .btn-start{background:var(--violet);color:#fff}
+/* Derivatives - Orange */
+.deriv-fill{background:var(--orange)}.deriv-tag{background:var(--orange-dim);color:var(--orange);border:1px solid var(--orange-border)}
+.deriv-sel{background:var(--orange-dim);border-color:var(--orange)}.deriv-dot.answered{background:var(--orange-dim);border-color:var(--orange);color:var(--orange)}
+.deriv-submit{background:var(--orange);color:#fff}.deriv-bar{background:linear-gradient(90deg,#c2590a,var(--orange))}
+.score-circle-deriv{background:var(--orange-dim);border:2px solid var(--orange-border)}.deriv-num{color:var(--orange)}
+.deriv-submit-another{background:var(--orange);color:#fff}
+.deriv-card::before{background:radial-gradient(circle at 80% 20%,var(--orange-dim),transparent 60%)}
+.deriv-card:hover{border-color:var(--orange-border)}.deriv-card:hover::before{opacity:1}
+.deriv-card .tc-title{color:var(--orange)}.deriv-card .btn-start{background:var(--orange);color:#fff}
+/* Logarithms - Emerald */
+.log-fill{background:var(--emerald)}.log-tag{background:var(--emerald-dim);color:var(--emerald);border:1px solid var(--emerald-border)}
+.log-sel{background:var(--emerald-dim);border-color:var(--emerald)}.log-dot.answered{background:var(--emerald-dim);border-color:var(--emerald);color:var(--emerald)}
+.log-submit{background:var(--emerald);color:#0d0f14}.log-bar{background:linear-gradient(90deg,#1a8f61,var(--emerald))}
+.score-circle-log{background:var(--emerald-dim);border:2px solid var(--emerald-border)}.log-num{color:var(--emerald)}
+.log-submit-another{background:var(--emerald);color:#0d0f14}
+.log-card::before{background:radial-gradient(circle at 80% 20%,var(--emerald-dim),transparent 60%)}
+.log-card:hover{border-color:var(--emerald-border)}.log-card:hover::before{opacity:1}
+.log-card .tc-title{color:var(--emerald)}.log-card .btn-start{background:var(--emerald);color:#0d0f14}
 .score-bar-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
 .breakdown-title{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:20px;text-align:center}
 .breakdown-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:60px}
@@ -385,6 +405,26 @@ footer a:hover{color:var(--gold)}
         </div>
         <button class="btn-start">Start Integrals Test →</button>
       </div>
+      <div class="test-card deriv-card" onclick="startTest('deriv')">
+        <div class="tc-icon">d/dx</div>
+        <div class="tc-title">Derivatives</div>
+        <div class="tc-desc">Very hard — product, quotient &amp; chain rules, implicit, log differentiation, parametric, related rates and more.</div>
+        <div class="tc-pills">
+          <span class="tc-pill">Chain Rule</span><span class="tc-pill">Implicit</span><span class="tc-pill">Log Diff.</span>
+          <span class="tc-pill">Parametric</span><span class="tc-pill">Higher Order</span><span class="tc-pill">Rates</span>
+        </div>
+        <button class="btn-start">Start Derivatives Test →</button>
+      </div>
+      <div class="test-card log-card" onclick="startTest('log')">
+        <div class="tc-icon">log</div>
+        <div class="tc-title">Logarithms</div>
+        <div class="tc-desc">Hard logarithm problems — properties, equations, change of base, natural logs, telescoping and more.</div>
+        <div class="tc-pills">
+          <span class="tc-pill">Log Laws</span><span class="tc-pill">Equations</span><span class="tc-pill">Change of Base</span>
+          <span class="tc-pill">Natural Log</span><span class="tc-pill">Telescoping</span><span class="tc-pill">Identities</span>
+        </div>
+        <button class="btn-start">Start Logarithms Test →</button>
+      </div>
     </div>
   </div>
 </div>
@@ -514,6 +554,73 @@ const SCI = [
   {topic:"Earth Science — Maps", q:"On a topographic (contour) map, contour lines that are very close together indicate:", ch:["A gentle slope","Flat land","A steep slope","A river valley","An ocean trench"], ans:2}
 ];
 
+
+const DERIV = [
+  {topic:"Product Rule",q:"Differentiate \\(f(x)=x^3\\sin(x)\\).",ch:["\\(3x^2\\sin x+x^3\\cos x\\)","\\(3x^2\\cos x\\)","\\(x^3\\cos x\\)","\\(3x^2\\sin x-x^3\\cos x\\)","\\(x^2\\sin x+x^3\\cos x\\)"],ans:0},
+  {topic:"Chain Rule",q:"Find \\(\\dfrac{d}{dx}\\left[e^{x^2+2x}\\right]\\).",ch:["\\(e^{x^2+2x}\\)","\\((2x+2)e^{x^2+2x-1}\\)","\\(2(x+1)e^{x^2+2x}\\)","\\(2xe^{x^2}\\)","\\(e^{2x+2}\\)"],ans:2},
+  {topic:"Chain Rule — Log",q:"Differentiate \\(f(x)=\\ln(\\sin x)\\).",ch:["\\(\\dfrac{1}{\\sin x}\\)","\\(\\cot x\\)","\\(\\ln(\\cos x)\\)","\\(-\\cot x\\)","\\(\\dfrac{\\cos x}{\\sin^2 x}\\)"],ans:1},
+  {topic:"Chain Rule — Trig",q:"Find \\(\\dfrac{d}{dx}[\\sin^2(3x)]\\).",ch:["\\(2\\sin(3x)\\)","\\(6\\cos^2(3x)\\)","\\(6\\sin(3x)\\cos(3x)\\)","\\(2\\sin(3x)\\cos(3x)\\)","\\(3\\cos(6x)\\)"],ans:2},
+  {topic:"Quotient Rule",q:"Differentiate \\(f(x)=\\dfrac{x}{x^2+1}\\).",ch:["\\(\\dfrac{1}{x^2+1}\\)","\\(\\dfrac{1-x^2}{(x^2+1)^2}\\)","\\(\\dfrac{1+x^2}{(x^2+1)^2}\\)","\\(\\dfrac{-2x}{(x^2+1)^2}\\)","\\(\\dfrac{2x}{(x^2+1)^2}\\)"],ans:1},
+  {topic:"Log Differentiation",q:"If \\(y=x^x\\), find \\(\\dfrac{dy}{dx}\\).",ch:["\\(x\\cdot x^{x-1}\\)","\\(x^x\\ln x\\)","\\(x^x(1+\\ln x)\\)","\\(x^{x-1}\\)","\\(\\dfrac{x^x}{x}\\)"],ans:2},
+  {topic:"Second Derivative",q:"If \\(y=\\sin(x^2)\\), find \\(\\dfrac{d^2y}{dx^2}\\).",ch:["\\(2\\cos(x^2)\\)","\\(-4x^2\\sin(x^2)\\)","\\(2\\cos(x^2)-4x^2\\sin(x^2)\\)","\\(4x^2\\sin(x^2)+2\\cos(x^2)\\)","\\(-2\\sin(x^2)\\)"],ans:2},
+  {topic:"Inverse Trig",q:"Find \\(\\dfrac{d}{dx}\\left[\\arctan(e^x)\\right]\\).",ch:["\\(\\dfrac{1}{1+e^{2x}}\\)","\\(\\dfrac{e^x}{1+e^{2x}}\\)","\\(\\dfrac{e^x}{(1+e^x)^2}\\)","\\(\\arctan(e^x)\\cdot e^x\\)","\\(\\dfrac{1}{1+e^x}\\)"],ans:1},
+  {topic:"Implicit Differentiation",q:"Given \\(x^2+xy+y^2=7\\), find \\(\\dfrac{dy}{dx}\\).",ch:["\\(-\\dfrac{x+y}{x+2y}\\)","\\(-\\dfrac{2x+y}{x+y}\\)","\\(\\dfrac{2x+y}{x+2y}\\)","\\(-\\dfrac{2x+y}{x+2y}\\)","\\(-\\dfrac{x}{y}\\)"],ans:3},
+  {topic:"Inverse Trig — Chain",q:"Differentiate \\(f(x)=\\arctan\\!\\left(\\dfrac{x}{\\sqrt{1-x^2}}\\right)\\).",ch:["\\(\\dfrac{1}{1+x^2}\\)","\\(\\dfrac{1}{\\sqrt{1-x^2}}\\)","\\(\\dfrac{x}{1+x^2}\\)","\\(\\dfrac{1}{1-x^2}\\)","\\(\\dfrac{1}{\\sqrt{1+x^2}}\\)"],ans:1},
+  {topic:"Triple Product Rule",q:"Differentiate \\(f(x)=x^2 e^x\\sin x\\).",ch:["\\(xe^x[(2+x)\\sin x+x\\cos x]\\)","\\(2xe^x\\sin x\\)","\\(x^2e^x(\\sin x+\\cos x)\\)","\\(e^x(2x\\sin x+x^2\\cos x)\\)","\\(x^2e^x\\cos x\\)"],ans:0},
+  {topic:"Log Differentiation",q:"If \\(y=(\\sin x)^{\\cos x}\\), find \\(\\dfrac{dy}{dx}\\).",ch:["\\((\\sin x)^{\\cos x}\\!\\left[\\dfrac{\\cos^2 x}{\\sin x}-\\sin x\\ln(\\sin x)\\right]\\)","\\(\\cos x(\\sin x)^{\\cos x-1}\\cdot\\cos x\\)","\\(-(\\sin x)^{\\cos x+1}\\ln(\\sin x)\\)","\\((\\sin x)^{\\cos x}[\\cot x+\\ln(\\sin x)]\\)","\\(-\\cos x\\cdot(\\sin x)^{\\cos x-1}\\)"],ans:0},
+  {topic:"Parametric — 2nd Deriv.",q:"Given \\(x=t^2,\\; y=t^3\\), find \\(\\dfrac{d^2y}{dx^2}\\).",ch:["\\(\\dfrac{3}{2t}\\)","\\(\\dfrac{3}{4t}\\)","\\(\\dfrac{9t}{4}\\)","\\(3t\\)","\\(\\dfrac{3}{4t^2}\\)"],ans:1},
+  {topic:"Triple Chain Rule",q:"Find \\(\\dfrac{d}{dx}\\left[e^{\\sin(\\ln x)}\\right]\\).",ch:["\\(\\dfrac{e^{\\sin(\\ln x)}}{x}\\)","\\(\\cos(\\ln x)\\cdot e^{\\sin(\\ln x)}\\)","\\(\\dfrac{\\cos(\\ln x)\\cdot e^{\\sin(\\ln x)}}{x}\\)","\\(\\dfrac{e^{\\cos(\\ln x)}}{x}\\)","\\(\\sin(\\ln x)\\cdot e^{\\sin(\\ln x)}\\)"],ans:2},
+  {topic:"Chain Rule — Sec",q:"Differentiate \\(f(x)=\\sec(x^2)\\).",ch:["\\(\\sec(x^2)\\tan(x^2)\\)","\\(2x\\sec^2(x^2)\\)","\\(2x\\sec(x^2)\\tan(x^2)\\)","\\(\\sec(x^2)\\cdot 2x\\)","\\(2x\\cos(x^2)/\\sin^2(x^2)\\)"],ans:2},
+  {topic:"Log Differentiation",q:"Find \\(\\dfrac{d}{dx}\\left[x^{1/x}\\right]\\).",ch:["\\(x^{1/x-1}\\)","\\(x^{1/x}\\cdot\\dfrac{1-\\ln x}{x^2}\\)","\\(\\dfrac{1-\\ln x}{x}\\)","\\(\\dfrac{x^{1/x}}{x^2}\\)","\\(x^{1/x}\\cdot\\dfrac{\\ln x}{x^2}\\)"],ans:1},
+  {topic:"Implicit Differentiation",q:"Given \\(x\\sin y + y\\sin x = 1\\), find \\(\\dfrac{dy}{dx}\\).",ch:["\\(-\\dfrac{\\sin y+y\\cos x}{x\\cos y+\\sin x}\\)","\\(\\dfrac{\\sin y+y\\cos x}{x\\cos y+\\sin x}\\)","\\(-\\dfrac{y\\cos x+\\sin y}{\\sin x\\cos y}\\)","\\(\\dfrac{\\sin y-y\\cos x}{x\\cos y-\\sin x}\\)","\\(-\\dfrac{y+x}{x+y}\\)"],ans:0},
+  {topic:"Log Derivative",q:"Find \\(\\dfrac{d}{dx}\\left[\\ln|\\sec x+\\tan x|\\right]\\).",ch:["\\(\\sec x\\tan x\\)","\\(\\dfrac{1}{\\sec x+\\tan x}\\)","\\(\\sec x\\)","\\(\\cos x\\)","\\(\\sec^2 x+\\sec x\\tan x\\)"],ans:2},
+  {topic:"Related Rates",q:"A 10 m ladder leans against a wall. The base slides away at 2 m/s. When the base is 6 m from the wall, how fast is the top sliding down?",ch:["\\(-\\tfrac{4}{3}\\) m/s","\\(-1\\) m/s","\\(-\\tfrac{3}{2}\\) m/s","\\(-\\tfrac{8}{3}\\) m/s","\\(-2\\) m/s"],ans:2},
+  {topic:"Limit Definition",q:"Using the limit definition, \\(\\dfrac{d}{dx}\\!\\left[\\dfrac{1}{x}\\right]\\) at \\(x=a\\) equals:",ch:["\\(\\dfrac{1}{a}\\)","\\(-\\dfrac{1}{a}\\)","\\(\\dfrac{1}{a^2}\\)","\\(-\\dfrac{1}{a^2}\\)","\\(\\dfrac{2}{a^3}\\)"],ans:3},
+  {topic:"Product + Chain",q:"Find \\(\\dfrac{d}{dx}\\left[\\sqrt{x^2+1}\\cdot\\ln(x^2+1)\\right]\\).",ch:["\\(\\dfrac{x\\ln(x^2+1)}{\\sqrt{x^2+1}}\\)","\\(\\dfrac{x[\\ln(x^2+1)+2]}{\\sqrt{x^2+1}}\\)","\\(\\dfrac{2x}{\\sqrt{x^2+1}}\\)","\\(x^2\\ln(x^2+1)\\)","\\(\\dfrac{\\ln(x^2+1)+2}{\\sqrt{x^2+1}}\\)"],ans:1},
+  {topic:"Chain — Arcsin",q:"Differentiate \\(f(x)=[\\arcsin(x)]^2\\).",ch:["\\(\\dfrac{2\\arcsin x}{\\sqrt{1-x^2}}\\)","\\(2\\arcsin x\\cdot\\arccos x\\)","\\(\\dfrac{2}{\\sqrt{1-x^2}}\\)","\\(\\dfrac{\\arcsin x}{\\sqrt{1-x^2}}\\)","\\(-\\dfrac{2\\arcsin x}{\\sqrt{1-x^2}}\\)"],ans:0},
+  {topic:"Log — arcsinh",q:"Find \\(\\dfrac{d}{dx}\\left[\\ln\\!\\left(x+\\sqrt{x^2+1}\\right)\\right]\\).",ch:["\\(\\dfrac{1}{\\sqrt{x^2-1}}\\)","\\(\\dfrac{1}{x+\\sqrt{x^2+1}}\\)","\\(\\dfrac{1}{\\sqrt{x^2+1}}\\)","\\(\\dfrac{x}{\\sqrt{x^2+1}}\\)","\\(\\dfrac{1}{\\sqrt{1-x^2}}\\)"],ans:2},
+  {topic:"Product Rule — Exp",q:"Differentiate \\(f(x)=e^x\\tan x\\).",ch:["\\(e^x\\sec^2 x\\)","\\(e^x\\tan x\\)","\\(\\dfrac{e^x(\\sin x+\\cos x)}{\\cos^2 x}\\)","\\(e^x(\\tan x+\\sec^2 x)\\)","\\(e^x\\sec x\\)"],ans:3},
+  {topic:"Implicit — Folium",q:"Find the slope of the tangent to \\(x^3+y^3=6xy\\) at \\((3,3)\\).",ch:["1","0","\\(-1\\)","3","\\(-3\\)"],ans:2},
+  {topic:"Log Differentiation",q:"Find \\(\\dfrac{d}{dx}\\left[x^{\\sin x}\\right]\\).",ch:["\\(\\sin x\\cdot x^{\\sin x-1}\\)","\\(x^{\\sin x}\\!\\left[\\cos x\\ln x+\\dfrac{\\sin x}{x}\\right]\\)","\\(\\cos x\\cdot x^{\\sin x}\\ln x\\)","\\(x^{\\sin x}\\cos x\\)","\\(x^{\\sin x}\\cdot\\dfrac{\\sin x}{x}\\)"],ans:1},
+  {topic:"Arctan — Identity",q:"Find \\(\\dfrac{d}{dx}\\!\\left[\\arctan\\!\\left(\\dfrac{\\sin x}{1+\\cos x}\\right)\\right]\\).",ch:["\\(\\dfrac{(1+\\cos x+\\sin^2 x)}{(1+\\cos x)^2+\\sin^2 x}\\)","\\(\\dfrac{\\cos x}{(1+\\cos x)^2}\\)","\\(\\dfrac{\\sin x}{2+2\\cos x}\\)","\\(\\dfrac{1}{2}\\)","\\(\\dfrac{1+\\cos x}{2}\\)"],ans:3},
+  {topic:"Log Differentiation",q:"Using log differentiation, find \\(\\dfrac{d}{dx}\\left[(x^2+1)^x\\right]\\).",ch:["\\(x(x^2+1)^{x-1}\\cdot 2x\\)","\\((x^2+1)^x\\!\\left[\\ln(x^2+1)+\\dfrac{2x^2}{x^2+1}\\right]\\)","\\((x^2+1)^x\\ln(x^2+1)\\)","\\(x(x^2+1)^x\\)","\\(\\dfrac{(x^2+1)^x\\cdot x}{x^2+1}\\)"],ans:1},
+  {topic:"ODE / Coordinate Geometry",q:"Let \\(y=f(x)\\) be a curve \\(C_1\\) through \\((2,2)\\) and \\((8,\\tfrac{1}{2})\\) satisfying \\(y\\dfrac{d^2y}{dx^2}=2\\!\\left(\\dfrac{dy}{dx}\\right)^{\\!2}\\). Curve \\(C_2\\) is the director circle of \\(x^2+y^2=2\\). If the shortest distance between \\(C_1\\) and \\(C_2\\) is \\((\\sqrt{p}-q)\\), \\(p,q\\in\\mathbb{N}\\), find \\(p^2-q\\).",ch:["46","55","60","62","74"],ans:3},
+  {topic:"Area Rate of Change",q:"Let \\(f(x)\\) be on \\([-1,1]\\) with \\(f''(x)=\\tan^{-1}(3^x)\\). Point \\(P\\) moves along \\(y=f(x)\\) with \\(x=\\sin t\\). Let \\(A\\) be the area bounded by the curve, the tangent at \\(P\\), and the \\(y\\)-axis. Find \\(\\dfrac{dA}{dt}\\) when \\(t=\\dfrac{\\pi}{6}\\).",ch:["\\(\\dfrac{\\pi}{24}\\)","\\(\\dfrac{\\pi\\sqrt{3}}{24}\\)","\\(\\dfrac{\\pi}{48}\\)","\\(\\dfrac{\\pi\\sqrt{3}}{48}\\)","\\(\\dfrac{\\pi\\sqrt{3}}{16}\\)"],ans:3}
+];
+
+const LOG_Q = [
+  {topic:"Basic Evaluation",q:"Evaluate \\(\\log_2(32)\\).",ch:["4","5","6","3","16"],ans:1},
+  {topic:"Log Equation",q:"Solve \\(\\log_3(x^2-x)=1\\).",ch:["\\(x=2\\) or \\(x=-1\\)","\\(x=\\dfrac{1+\\sqrt{13}}{2}\\) or \\(x=\\dfrac{1-\\sqrt{13}}{2}\\)","\\(x=3\\) or \\(x=-2\\)","\\(x=\\sqrt{3}\\)","\\(x=3\\)"],ans:1},
+  {topic:"Log Properties",q:"Simplify \\(\\log a+\\log b-\\log c\\).",ch:["\\(\\log(a+b-c)\\)","\\(\\log(a-b+c)\\)","\\(\\log\\!\\left(\\dfrac{ab}{c}\\right)\\)","\\(\\log(abc)\\)","\\(\\log\\!\\left(\\dfrac{a}{bc}\\right)\\)"],ans:2},
+  {topic:"Negative Log",q:"Evaluate \\(\\log_5\\!\\left(\\dfrac{1}{125}\\right)\\).",ch:["\\(-3\\)","\\(3\\)","\\(-\\tfrac{1}{3}\\)","\\(\\tfrac{1}{3}\\)","\\(-5\\)"],ans:0},
+  {topic:"Change of Base",q:"Express \\(\\log_7(100)\\) using natural logarithms.",ch:["\\(\\dfrac{\\ln 7}{\\ln 100}\\)","\\(\\dfrac{\\ln 7}{2}\\)","\\(\\dfrac{\\ln 100}{\\ln 7}\\)","\\(\\dfrac{\\ln 7}{2\\ln 7}\\)","\\(2\\ln 7\\)"],ans:2},
+  {topic:"Exponential Equation",q:"Solve \\(2^{3x-1}=16\\).",ch:["\\(x=2\\)","\\(x=\\tfrac{5}{3}\\)","\\(x=\\tfrac{4}{3}\\)","\\(x=3\\)","\\(x=1\\)"],ans:1},
+  {topic:"Expanding Logs",q:"Expand \\(\\log_a\\!\\left(\\dfrac{x^2 y^3}{z^4}\\right)\\).",ch:["\\(2\\log_a x\\cdot 3\\log_a y\\div 4\\log_a z\\)","\\(2+3-4\\)","\\(2\\log_a x+3\\log_a y-4\\log_a z\\)","\\(6\\log_a(xyz)\\)","\\(\\log_a(x^2)+\\log_a(y^3)+\\log_a(z^4)\\)"],ans:2},
+  {topic:"Log Equation",q:"Solve \\(\\log(x)+\\log(x-3)=1\\) (base 10).",ch:["\\(x=5\\)","\\(x=5\\) or \\(x=-2\\)","\\(x=2\\)","\\(x=10\\)","\\(x=-2\\)"],ans:0},
+  {topic:"Log in Terms of p,q",q:"If \\(\\log_a 2=p\\) and \\(\\log_a 3=q\\), express \\(\\log_a 72\\).",ch:["\\(2p+3q\\)","\\(p+q\\)","\\(3p+2q\\)","\\(5pq\\)","\\(6pq\\)"],ans:2},
+  {topic:"Nested Logs",q:"Solve \\(\\log_2(\\log_3(x))=1\\).",ch:["\\(x=6\\)","\\(x=8\\)","\\(x=9\\)","\\(x=27\\)","\\(x=4\\)"],ans:2},
+  {topic:"Approximation",q:"Given \\(\\log_{10}3\\approx 0.477\\), find \\(\\log_{10}(270)\\).",ch:["2.244","2.431","1.954","3.431","0.477"],ans:1},
+  {topic:"Exponential — Substitution",q:"Solve \\(e^{2x}-5e^x+6=0\\).",ch:["\\(x=\\ln 2\\) or \\(x=\\ln 3\\)","\\(x=2\\) or \\(x=3\\)","\\(x=\\ln 5\\pm 1\\)","\\(x=\\ln 6\\)","\\(x=\\ln\\tfrac{5\\pm 1}{2}\\)"],ans:0},
+  {topic:"Condensing Logs",q:"Simplify \\(\\log(50)+\\log(2)\\).",ch:["\\(\\log(52)\\)","\\(1\\)","\\(2\\)","\\(\\log(48)\\)","\\(100\\)"],ans:2},
+  {topic:"Domain",q:"What is the domain of \\(f(x)=\\log(x^2-4)\\)?",ch:["\\(x>2\\)","\\(-2<x<2\\)","\\(x<-2\\text{ or }x>2\\)","All real \\(x\\)","\\(x\\neq\\pm 2\\)"],ans:2},
+  {topic:"Log Equation",q:"Solve \\(\\ln(x+1)-\\ln(x-1)=\\ln 3\\).",ch:["\\(x=1\\)","\\(x=2\\)","\\(x=3\\)","\\(x=4\\)","\\(x=5\\)"],ans:1},
+  {topic:"Log Equation",q:"Solve \\(\\log_6 x+\\log_6(x-5)=2\\).",ch:["\\(x=4\\)","\\(x=6\\)","\\(x=8\\)","\\(x=9\\)","\\(x=12\\)"],ans:3},
+  {topic:"Log in Terms of a,b",q:"If \\(\\log_p q=a\\) and \\(\\log_p r=b\\), express \\(\\log_p\\!\\left(\\dfrac{q^2}{r^3}\\right)\\).",ch:["\\(2a+3b\\)","\\(6ab\\)","\\(2a-3b\\)","\\(\\dfrac{a^2}{b^3}\\)","\\(2b-3a\\)"],ans:2},
+  {topic:"Exponential Equation",q:"Solve \\(3^{x+2}=7^{x-1}\\).",ch:["\\(x=\\dfrac{\\ln 63}{\\ln(7/3)}\\)","\\(x=\\dfrac{\\ln 21}{\\ln(7/3)}\\)","\\(x=5\\)","\\(x=\\dfrac{\\ln 7}{\\ln 3}\\)","\\(x=\\dfrac{2\\ln 3}{\\ln 7}\\)"],ans:0},
+  {topic:"Mixed Bases",q:"Solve \\(\\log_4 x+\\log_8 x=4\\).",ch:["\\(x=16\\)","\\(x=2^{24/5}\\)","\\(x=2^{4/5}\\)","\\(x=32\\)","\\(x=64\\)"],ans:1},
+  {topic:"Iterated Logs",q:"Solve \\(\\log(\\log x)=1\\) (base 10).",ch:["\\(x=10\\)","\\(x=100\\)","\\(x=10^{10}\\)","\\(x=10^{100}\\)","\\(x=1000\\)"],ans:2},
+  {topic:"Telescoping Product",q:"Evaluate \\((\\log_2 3)(\\log_3 4)(\\log_4 5)(\\log_5 2)\\).",ch:["0","1","2","\\(\\log_2 5\\)","\\(\\log_2 3\\)"],ans:1},
+  {topic:"Exponential Equation",q:"Solve \\(2^{x^2-3x+2}=4\\).",ch:["\\(x=0\\) only","\\(x=3\\) only","\\(x=0\\) or \\(x=3\\)","\\(x=1\\) or \\(x=2\\)","\\(x=\\pm 1\\)"],ans:2},
+  {topic:"Telescoping Product",q:"Evaluate \\(\\log_3 4\\cdot\\log_4 5\\cdot\\log_5 6\\cdots\\log_{80}81\\).",ch:["4","3","\\(\\log_3 81\\)","81","\\(\\log_3 27\\)"],ans:0},
+  {topic:"Natural Log Equation",q:"Solve \\(\\ln(3x-5)=\\ln(2x+3)\\).",ch:["\\(x=2\\)","\\(x=5\\)","\\(x=7\\)","\\(x=8\\)","\\(x=10\\)"],ans:3},
+  {topic:"Log Power Rule",q:"If \\(\\log_{10} x=y\\), find \\(\\log_{10}\\!\\left(\\dfrac{x^3}{\\sqrt{x}}\\right)\\).",ch:["\\(\\dfrac{5y}{2}\\)","\\(2y\\)","\\(3y\\)","\\(\\dfrac{5y}{2}\\)","\\(\\dfrac{2y}{5}\\)"],ans:0},
+  {topic:"Exponential — Substitution",q:"Solve \\(4^x-2^{x+2}+4=0\\).",ch:["\\(x=0\\)","\\(x=1\\)","\\(x=2\\)","\\(x=4\\)","\\(x=\\ln 2\\)"],ans:1},
+  {topic:"Fractional Base Change",q:"Evaluate \\(\\log_8\\!\\left(\\dfrac{1}{\\sqrt{32}}\\right)\\).",ch:["\\(-\\dfrac{5}{6}\\)","\\(-\\dfrac{5}{3}\\)","\\(\\dfrac{5}{6}\\)","\\(-\\dfrac{2}{5}\\)","\\(-\\dfrac{3}{2}\\)"],ans:0},
+  {topic:"Log Equation",q:"Solve \\(\\log_4(x+3)+\\log_4(x-3)=2\\).",ch:["\\(x=4\\)","\\(x=5\\)","\\(x=7\\)","\\(x=\\pm 5\\)","\\(x=3\\)"],ans:1},
+  {topic:"Hard Identity",q:"Let \\(a=\\log_{12}18\\) and \\(b=\\log_{24}54\\). Find \\(5(a-b)+ab\\).",ch:["0","1","2","\\(ab\\)","\\(5(a-b)\\)"],ans:1},
+  {topic:"Log — Reciprocal",q:"If \\(\\log_a b+\\log_b a=3\\) and \\(\\log_a b=x\\), find \\(x\\).",ch:["\\(\\dfrac{3\\pm\\sqrt{5}}{2}\\)","\\(\\dfrac{3\\pm\\sqrt{3}}{2}\\)","\\(\\dfrac{3\\pm\\sqrt{7}}{2}\\)","\\(2\\) or \\(1\\)","\\(\\dfrac{1\\pm\\sqrt{5}}{2}\\)"],ans:0}
+];
+
 const INTEGRALS = [
   {topic:"Power Rule", q:"Evaluate \\(\\displaystyle\\int x^5 \\, dx\\)", ch:["\\(x^5 + C\\)","\\(5x^4 + C\\)","\\(\\dfrac{x^6}{6} + C\\)","\\(6x^6 + C\\)","\\(x^6 + C\\)"], ans:2},
   {topic:"Constant Rule", q:"Evaluate \\(\\displaystyle\\int 4 \\, dx\\)", ch:["\\(4 + C\\)","\\(4x + C\\)","\\(0 + C\\)","\\(x + C\\)","\\(4x^2 + C\\)"], ans:1},
@@ -547,6 +654,17 @@ const INTEGRALS = [
   {topic:"Definite Integral", q:"Evaluate \\(\\displaystyle\\int_0^1 (4x^3 - 3x^2)\\, dx\\)", ch:["1","−1","4","0","7"], ans:3}
 ];
 
+
+function getTestConfig(type) {
+  const C = {
+    math: {label:'Mathematics',tag:'math-tag',fill:'math-fill',sub:'math-submit',circ:'score-circle-math',num:'math-num',bar:'math-bar',sa:'math-submit-another',dot:'math-dot',sel:'math-sel'},
+    sci:  {label:'Science',tag:'sci-tag',fill:'sci-fill',sub:'sci-submit',circ:'score-circle-sci',num:'sci-num',bar:'sci-bar',sa:'sci-submit-another',dot:'sci-dot',sel:'sci-sel'},
+    int:  {label:'Calculus — Integrals',tag:'int-tag',fill:'int-fill',sub:'int-submit',circ:'score-circle-int',num:'int-num',bar:'int-bar',sa:'int-submit-another',dot:'int-dot',sel:'int-sel'},
+    deriv:{label:'Derivatives',tag:'deriv-tag',fill:'deriv-fill',sub:'deriv-submit',circ:'score-circle-deriv',num:'deriv-num',bar:'deriv-bar',sa:'deriv-submit-another',dot:'deriv-dot',sel:'deriv-sel'},
+    log:  {label:'Logarithms',tag:'log-tag',fill:'log-fill',sub:'log-submit',circ:'score-circle-log',num:'log-num',bar:'log-bar',sa:'log-submit-another',dot:'log-dot',sel:'log-sel'}
+  };
+  return C[type];
+}
 // ═══════════════ STATE ═══════════════
 let currentTest = [];
 let currentIdx = 0;
@@ -565,19 +683,16 @@ function showPage(id) {
 
 function startTest(type) {
   testType = type;
-  currentTest = type === 'math' ? MATH : type === 'sci' ? SCI : INTEGRALS;
+  const qMap = {math:MATH,sci:SCI,int:INTEGRALS,deriv:DERIV,log:LOG_Q};
+  currentTest = qMap[type];
   currentIdx = 0;
   userAnswers = new Array(30).fill(null);
   showPage('test');
-  const isMath = type === 'math', isInt = type === 'int';
-  const tagLabel = isMath ? 'Mathematics' : isInt ? 'Calculus — Integrals' : 'Science';
-  const tagClass = isMath ? 'math-tag' : isInt ? 'int-tag' : 'sci-tag';
-  const fillClass = isMath ? 'math-fill' : isInt ? 'int-fill' : 'sci-fill';
-  const submitClass = isMath ? 'math-submit' : isInt ? 'int-submit' : 'sci-submit';
-  document.getElementById('test-tag').textContent = tagLabel;
-  document.getElementById('test-tag').className = 'test-subject-tag ' + tagClass;
-  document.getElementById('prog-fill').className = 'progress-bar-fill ' + fillClass;
-  document.getElementById('btn-submit-test').className = 'btn-submit-test ' + submitClass;
+  const cfg = getTestConfig(type);
+  document.getElementById('test-tag').textContent = cfg.label;
+  document.getElementById('test-tag').className = 'test-subject-tag ' + cfg.tag;
+  document.getElementById('prog-fill').className = 'progress-bar-fill ' + cfg.fill;
+  document.getElementById('btn-submit-test').className = 'btn-submit-test ' + cfg.sub;
   buildDots();
   renderQuestion();
 }
@@ -598,7 +713,7 @@ function buildDots() {
 
 function updateDots() {
   const dots = document.querySelectorAll('.q-dot');
-  const dotCls = testType === 'math' ? 'math-dot' : testType === 'int' ? 'int-dot' : 'sci-dot';
+  const dotCls = getTestConfig(testType).dot;
   dots.forEach((d, i) => {
     d.className = 'q-dot';
     if (userAnswers[i] !== null) d.classList.add('answered', dotCls);
@@ -609,8 +724,7 @@ function updateDots() {
 // ═══════════════ RENDER QUESTION ═══════════════
 function renderQuestion() {
   const q = currentTest[currentIdx];
-  const isMath = testType === 'math', isInt = testType === 'int';
-  const selClass = isMath ? 'math-sel' : isInt ? 'int-sel' : 'sci-sel';
+  const selClass = getTestConfig(testType).sel;
 
   document.getElementById('q-current').textContent = currentIdx + 1;
   document.getElementById('q-total').textContent = 30;
@@ -676,12 +790,12 @@ function submitTest() {
 
 function showResults() {
   showPage('results');
-  const isMath = testType === 'math', isInt = testType === 'int', isSci = testType === 'sci';
+  const cfg = getTestConfig(testType);
   let score = 0;
   userAnswers.forEach((a, i) => { if (a === currentTest[i].ans) score++; });
 
-  document.getElementById('res-circle').className = 'score-circle ' + (isMath ? 'score-circle-math' : isInt ? 'score-circle-int' : 'score-circle-sci');
-  document.getElementById('res-score').className = 'score-num ' + (isMath ? 'math-num' : isInt ? 'int-num' : 'sci-num');
+  document.getElementById('res-circle').className = 'score-circle ' + cfg.circ;
+  document.getElementById('res-score').className = 'score-num ' + cfg.num;
   document.getElementById('res-score').textContent = score;
 
   // Band
@@ -696,11 +810,11 @@ function showResults() {
   document.getElementById('res-band').className = 'band-badge ' + bandClass;
   document.getElementById('res-desc').textContent = desc;
 
-  document.getElementById('res-bar').className = 'score-bar-fill ' + (isMath ? 'math-bar' : isInt ? 'int-bar' : 'sci-bar');
+  document.getElementById('res-bar').className = 'score-bar-fill ' + cfg.bar;
   setTimeout(() => { document.getElementById('res-bar').style.width = (score / 30 * 100) + '%'; }, 100);
 
-  document.getElementById('btn-other-test').textContent = isMath ? 'Try Science Test' : isSci ? 'Try Math Test' : 'Try Math Test';
-  document.getElementById('btn-submit-another').className = 'btn-submit-another ' + (isMath ? 'math-submit-another' : isInt ? 'int-submit-another' : 'sci-submit-another');
+  document.getElementById('btn-other-test').textContent = 'Try Another Test';
+  document.getElementById('btn-submit-another').className = 'btn-submit-another ' + cfg.sa;
 
   // Breakdown
   const letters = ['a', 'b', 'c', 'd', 'e'];
